@@ -16,6 +16,8 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
 
+    this.serverValue = app.database.ServerValue;
+
     this.auth = app.auth();
     this.db = app.database();
 
@@ -40,22 +42,10 @@ class Firebase {
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
-        console.log(authUser);
         this.user(authUser.uid)
           .once('value')
           .then(snapshot => {
             const dbUser = snapshot.val();
-            console.log(this.db);
-            console.log(this.auth);
-            console.log(snapshot);
-            console.log(dbUser);
-
-            // default empty roles
-           /* if (!dbUser.roles) {
-              dbUser.roles = {};
-            }*/
-
-            // merge auth and db user
             authUser = {
               uid: authUser.uid,
               email: authUser.email,
@@ -71,17 +61,21 @@ class Firebase {
       }
     });
 
-  // *** User API ***
+    
+
+
 
   user = uid => this.db.ref(`users/${uid}`);
 
   users = () => this.db.ref('users');
 
-  // *** Message API ***
-
   message = uid => this.db.ref(`messages/${uid}`);
 
   messages = () => this.db.ref('messages');
+  
+  tweet = uid => this.db.ref(`tweets/${uid}`);
+
+  tweets = () => this.db.ref('tweets');
 }
 
 export default Firebase;

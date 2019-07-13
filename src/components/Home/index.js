@@ -1,14 +1,21 @@
 import React from 'react';
+import TweetPage from '../TweetPage';
+import { compose } from 'recompose';
 
 import { withAuthorization } from '../Session';
-
 const HomePage = () => (
-  <div>
-    <h1>Home Page</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
-  </div>
+    <div>
+        <h1>Home Page</h1>
+        <p>The Home Page is accessible by every signed in user.</p>
+        <TweetPage />
+
+        
+    </div>
 );
 
 const condition = authUser => !!authUser;
 
-export default withAuthorization(condition)(HomePage);
+export default compose(
+  withAuthorization(condition),
+)(HomePage);
+

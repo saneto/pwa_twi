@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
-class AdminPage extends Component {
+class UserList extends Component {
   constructor(props) {
     super(props);
-
+    console.log(props);
     this.state = {
       loading: false,
       users: [],
@@ -39,32 +39,26 @@ class AdminPage extends Component {
 
     return (
       <div>
-        <h1>Admin</h1>
-
+        <h2>Users</h2>
         {loading && <div>Loading ...</div>}
-
-        <UserList users={users} />
+        <ul>
+          {users.map(user => (
+            <li key={user.uid}>
+              <span>
+                <strong>ID:</strong> {user.uid}
+              </span>
+              <span>
+                <strong>E-Mail:</strong> {user.email}
+              </span>
+              <span>
+                <strong>Username:</strong> {user.username}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
 }
 
-const UserList = ({ users }) => (
-    <ul>
-      {users.map(user => (
-        <li key={user.uid}>
-          <span>
-            <strong>ID:</strong> {user.uid}
-          </span>
-          <span>
-            <strong>E-Mail:</strong> {user.email}
-          </span>
-          <span>
-            <strong>Username:</strong> {user.username}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-
-export default withFirebase(AdminPage);
+export default withFirebase(UserList);
