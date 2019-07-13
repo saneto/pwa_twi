@@ -1,8 +1,7 @@
 import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
-import { AuthUserContext } from '../Session';
-import { Paper, TextField, Button, Grid } from '@material-ui/core';
 import TweetList from './TweetList';
+import TweetInput from "./TweetInput";
 
 
 
@@ -13,13 +12,18 @@ class TweetPage extends Component {
             text: '',
             loading: false,
             tweets: [],
-            limit: 5, 
-        }
-    }
+            limit: 15, 
+            openText: false,
+            userNameToReply: '',
+            messages: [],
+            authUser :  Object.assign({}, props.authUser, { retweets: [] }, { favorites: [] }),
+        }  
+        console.log(this.state)      
+    };
   
     componentDidMount() {
         this.onListenForTweets();
-    }
+    };
 
     onListenForTweets = () => {
         this.setState({ loading: true });
@@ -47,16 +51,62 @@ class TweetPage extends Component {
     };
 
 
+    handleCloseText (event) {
+        event.preventDefault();
+        this.setState({ openText: false });
+    };
 
-    componentWillUnmount() {
-        this.props.firebase.tweets().off();
+    onCloseText ( userNameToReply) {
+        this.setState({
+            openText: true,
+            userNameToReply
+        });
+    };
+
+    renderTweetInput () {
+        if (this.state.openText) {
+            return (
+                <TweetInput
+                    authUser={this.state.authUser}
+                    onChangeText={this.onChangeText}
+                    onCreateTweet={this.onCreateTweet}
+                    text = {this.state.text}
+                    onCloseText={this.onCloseText}
+                    userNameToReply={this.state.userNameToReply}
+                />
+            )
+        }
+    };
+
+
+    onReTweet = (tweet) =>{
+        if(tweet.Listretweets === undefined)
+        {
+            tweet.Listretweets = [];
+        }
+        tweet.Listretweets.push({
+            text: this.state.text,
+            userId: this.state.authUser.uid,
+            username: this.state.authUser.email.split('@')[0],
+            createdAt: this.props.firebase.serverValue.TIMESTAMP,
+            favorites: 0,
+            retweets: 0,
+        });
+        tweet.retweets++;
+        this.props.firebase.tweet(tweet.uid).set({
+            tweet
+        });
+
     }
 
-    onCreateTweet = (event, authUser) => {
+    onCreateTweet = (event) => {
         this.props.firebase.tweets().push({
             text: this.state.text,
-            userId: authUser.uid,
+            userId: this.state.authUser.uid,
+            username: this.state.authUser.email.split('@')[0],
             createdAt: this.props.firebase.serverValue.TIMESTAMP,
+            favorites: 0,
+            retweets: 0,
         });
 
         this.setState({ text: '' });
@@ -65,6 +115,8 @@ class TweetPage extends Component {
     };
 
     onEditTweet = (tweet, text) => {
+        console.log("sdqsd")
+        this.onReTweet(tweet);
         const { uid, ...tweetSnapshot } = tweet;
 
         this.props.firebase.tweet(tweet.uid).set({
@@ -72,6 +124,10 @@ class TweetPage extends Component {
             text,
             editedAt: this.props.firebase.serverValue.TIMESTAMP,
         });
+    };    
+
+    componentWillUnmount() {
+        this.props.firebase.tweets().off();
     };
 
     onRemoveTweet = uid => {
@@ -79,61 +135,42 @@ class TweetPage extends Component {
     };
 
 
-    onChangeText = event => {
-        this.setState({ text: event.target.value });
+    onChangeText = value => {
+        this.setState({ text: value });
     };
 
 
     render() {
-        const { text, tweets, loading } = this.state;
+        const { text, tweets, loading, authUser } = this.state;
         return (
-            <AuthUserContext.Consumer>
-                {authUser => (
-                    <div>
-                        <h2>Actu</h2>
-                        {loading && <div>Loading ...</div>}   
+                <div>
+                    <h2>Actu</h2>
+                    {loading && <div>Loading ...</div>}   
 
-                        {tweets && (
-                            <TweetList
-                                authUser={authUser}
-                                tweets={tweets}
-                                onEditTweet={this.onEditTweet}
-                                onRemoveTweet={this.onRemoveTweet}
-                            />
-                        )}
+                    {tweets && (
+                        <TweetList
+                            authUser={authUser}
+                            tweets={tweets}
+                            onEditTweet={this.onEditTweet}
+                            onRemoveTweet={this.onRemoveTweet}
+                        />
+                    )}
 
-                        {!tweets && <div>Aucun tweet trouver ...</div>}
+                    {!tweets && <div>Aucun tweet trouver ...</div>}
+                
+                    <TweetInput
+                        onChangeText={this.onChangeText}
+                        onCreateTweet={this.onCreateTweet}
+                        text = {text}
+                    />
                     
-                        <Paper className="">
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={2}
-                                value={text}
-                                onChange={this.onChangeText}
-                            />
-                            <Grid container justify="flex-end">
-                                <Grid item>
-                                    <Button
-                                        variant="outlined"
-                                        color="primary"
-                                        type="submit"
-                                        onClick={event =>this.onCreateTweet(event, authUser)}
-                                    >
-                                        Tweet
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </div>
-                    
-
-
-                )}
-            </AuthUserContext.Consumer>
-        );
+                </div>
+        )
     }
 
 }
+
+
+
 
 export default withFirebase(TweetPage) ;

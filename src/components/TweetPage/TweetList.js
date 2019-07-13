@@ -5,20 +5,22 @@ import TweetItem from './TweetItem';
 const TweetList = ({
   authUser,
   tweets,
+  
   onEditTweet,
   onRemoveTweet,
 }) => (
-  <ul>
+  <div className="root_listTweet">
     {tweets.map(tweet => (
       <TweetItem
         authUser={authUser}
         key={tweet.uid}
         tweet={tweet}
+        
         onEditTweet={onEditTweet}
         onRemoveTweet={onRemoveTweet}
       />
-    ))}
-  </ul>
+    )).reverse()}
+  </div>
 );
 
 export default TweetList;
