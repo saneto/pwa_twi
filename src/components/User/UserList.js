@@ -5,7 +5,6 @@ import { withFirebase } from '../Firebase';
 class UserList extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       loading: false,
       users: [],

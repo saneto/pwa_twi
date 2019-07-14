@@ -11,7 +11,6 @@ const withAuthentication = Component => {
       this.state = {
         authUser: JSON.parse(localStorage.getItem('authUser')),
       };
-      console.log(this.state);
     }
 
     componentDidMount() {

@@ -6,9 +6,9 @@ class TweetInput extends Component
     constructor(props)
     {
         super(props);
+        const pretext = (this.props.userNameToReply) ?  `@${this.props.userNameToReply} `  : '';
         this.state = {
-            text: '',
-            classes : props.classes,
+            text: pretext,
             userNameToReply :'toto',
         }
     };

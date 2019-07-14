@@ -13,7 +13,6 @@ class UserItem extends Component {
 
 
   onSendPasswordResetEmail = () => {
-    console.log(this.state.user.email);
     this.props.firebase.doPasswordReset(this.state.user.email);
   };
 

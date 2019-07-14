@@ -16,9 +16,9 @@ class TweetPage extends Component {
             openText: false,
             userNameToReply: '',
             messages: [],
-            authUser :  Object.assign({}, props.authUser, { retweets: [] }, { favorites: [] }),
-        }  
-        console.log(this.state)      
+            isReply : false,
+            authUser :  Object.assign({}, props.authUser, { retweets: [] }, { likes: [] }),
+        }     
     };
   
     componentDidMount() {
@@ -51,19 +51,8 @@ class TweetPage extends Component {
     };
 
 
-    handleCloseText (event) {
-        event.preventDefault();
-        this.setState({ openText: false });
-    };
 
-    onCloseText ( userNameToReply) {
-        this.setState({
-            openText: true,
-            userNameToReply
-        });
-    };
-
-    renderTweetInput () {
+    renderTweetInput = () => {
         if (this.state.openText) {
             return (
                 <TweetInput
@@ -72,29 +61,56 @@ class TweetPage extends Component {
                     onCreateTweet={this.onCreateTweet}
                     text = {this.state.text}
                     onCloseText={this.onCloseText}
-                    userNameToReply={this.state.userNameToReply}
+                    userNameToReply = {this.state.userNameToReply}
                 />
             )
         }
     };
 
+    onaddFavorite = (tweet) =>{
 
-    onReTweet = (tweet) =>{
-        if(tweet.Listretweets === undefined)
+        if (this.state.authUser.likes.filter(rt => rt === tweet.uid).length >0 )
         {
-            tweet.Listretweets = [];
+            return;
         }
-        tweet.Listretweets.push({
+        this.state.authUser.likes.push(tweet.uid);
+        if(tweet.listFav === undefined)
+        {
+            tweet.listFav = [];
+        }
+        tweet.listFav.push({
+            userId: this.state.authUser.uid,
+            username: this.state.authUser.email.split('@')[0],
+        });
+        tweet.like++;
+        this.props.firebase.tweet(tweet.uid).set({
+            ...tweet
+        });
+    }
+
+  
+    onReTweet = (tweet) =>{        
+        if (this.state.authUser.retweets.filter(rt => rt === tweet.uid).length >0 )
+        {
+            return;
+        }
+        this.state.authUser.retweets.push(tweet.uid);
+
+        if(tweet.listreTweets === undefined)
+        {
+            tweet.listreTweets = [];
+        }
+        tweet.listreTweets.push({
             text: this.state.text,
             userId: this.state.authUser.uid,
             username: this.state.authUser.email.split('@')[0],
             createdAt: this.props.firebase.serverValue.TIMESTAMP,
-            favorites: 0,
+            like: 0,
             retweets: 0,
         });
         tweet.retweets++;
         this.props.firebase.tweet(tweet.uid).set({
-            tweet
+            ...tweet
         });
 
     }
@@ -105,18 +121,17 @@ class TweetPage extends Component {
             userId: this.state.authUser.uid,
             username: this.state.authUser.email.split('@')[0],
             createdAt: this.props.firebase.serverValue.TIMESTAMP,
-            favorites: 0,
+            like: 0,
             retweets: 0,
+            listreTweets:[],
+            listFav:[],
         });
 
-        this.setState({ text: '' });
-
+        this.setState({ text: '', openText: false });
         event.preventDefault();
     };
 
     onEditTweet = (tweet, text) => {
-        console.log("sdqsd")
-        this.onReTweet(tweet);
         const { uid, ...tweetSnapshot } = tweet;
 
         this.props.firebase.tweet(tweet.uid).set({
@@ -134,11 +149,20 @@ class TweetPage extends Component {
         this.props.firebase.tweet(uid).remove();
     };
 
+    onReplyTweet = (userNameToReply) =>{
+        this.setState({ 
+            openText: true,
+            userNameToReply
+        });
+    }
 
     onChangeText = value => {
         this.setState({ text: value });
     };
-
+    onOpenText  = event =>{
+        event.preventDefault()
+        this.setState({ openText: true })
+      }
 
     render() {
         const { text, tweets, loading, authUser } = this.state;
@@ -146,6 +170,10 @@ class TweetPage extends Component {
                 <div>
                     <h2>Actu</h2>
                     {loading && <div>Loading ...</div>}   
+                    <button onClick={this.onOpenText} className="open_button_tweet">
+                        <span className='fa fa-lg fa-edit'></span> Tweet!
+                    </button>
+                    {this.renderTweetInput()}
 
                     {tweets && (
                         <TweetList
@@ -153,16 +181,15 @@ class TweetPage extends Component {
                             tweets={tweets}
                             onEditTweet={this.onEditTweet}
                             onRemoveTweet={this.onRemoveTweet}
+                            onReTweet ={this.onReTweet}
+                            onaddFavorite={this.onaddFavorite}
+                            onReplyTweet={this.onReplyTweet}
                         />
                     )}
 
                     {!tweets && <div>Aucun tweet trouver ...</div>}
                 
-                    <TweetInput
-                        onChangeText={this.onChangeText}
-                        onCreateTweet={this.onCreateTweet}
-                        text = {text}
-                    />
+
                     
                 </div>
         )
