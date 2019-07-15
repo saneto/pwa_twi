@@ -10,7 +10,7 @@ const config = {
     authDomain: "superp2-8a0d2.firebaseapp.com",
     databaseURL: "https://superp2-8a0d2.firebaseio.com",
     projectId: "superp2-8a0d2",
-    storageBucket: "",
+    storageBucket: "superp2-8a0d2.appspot.com",
     messagingSenderId: "499719922525",
     appId: "1:499719922525:web:cf330b8bb5ce987b"
 };

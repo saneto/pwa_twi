@@ -22,16 +22,17 @@ class UserAccount extends Component
         console.error(error);
     };
     handleUploadSuccess = filename => {
+        console.log(filename)
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         this.props.firebase
-        .storage()
-        .ref("images")
+        .images
         .child(filename)
         .getDownloadURL()
         .then(url => this.setState({ avatarURL: url }));
     };
 
     onChange = event => {
+        console.log(this.state)
         this.setState({ [event.target.name]: event.target.value });
       };
  
@@ -45,7 +46,7 @@ class UserAccount extends Component
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="imgcontainer">
-                    <img src={src} alt="Avatar" className="avatar"/>
+                    <img src="https://www.pokepedia.fr/images/thumb/2/29/Ouisticram-Pt.png/250px-Ouisticram-Pt.png" alt="Avatar" className="avatar"/>
                 </div>
                 <div  className="container">
                     <label htmlFor="username"><b>User Name</b></label>
@@ -72,7 +73,7 @@ class UserAccount extends Component
                         <FileUploader
                         hidden
                         accept="image/*"
-                        storageRef={this.props.firebase.images}
+                        storageRef={this.props.firebase.image('dqsdds')}
                         onUploadStart={this.handleUploadStart}
                         onUploadError={this.handleUploadError}
                         onUploadSuccess={this.handleUploadSuccess}

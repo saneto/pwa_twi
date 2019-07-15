@@ -23,7 +23,7 @@ class UserCard extends Component {
 		return (
 			<div className="card">
 				<Link to={userRoute}>
-					<img src="https://www.pokepedia.fr/images/thumb/2/29/Ouisticram-Pt.png/250px-Ouisticram-Pt.png" alt="John" style={{ width:'100%' }}/>  
+					<img src="https://www.pokepedia.fr/images/thumb/2/29/Ouisticram-Pt.png/250px-Ouisticram-Pt.png" alt="singe" style={{ width:'100%' }}/>  
 				
 				</Link>
 				<h1>
