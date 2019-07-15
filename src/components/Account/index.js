@@ -4,7 +4,11 @@ import { AuthUserContext, withAuthorization } from '../Session';
 
 import UserAccount from "./userAccout";
 const AccountPage = () => (
-     <UserAccount/>
+     <AuthUserContext.Consumer> 
+      {authUser => (
+            <UserAccount authUser = {authUser}/>
+        )}
+     </AuthUserContext.Consumer>
 );
 
 const condition = authUser => !!authUser;
