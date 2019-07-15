@@ -7,13 +7,14 @@ import * as ROUTES from '../../../constants/routes';
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Register</h1>
     <SignUpForm />
   </div>
 );
 
 const INITIAL_STATE = {
   username: '',
+  name: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -21,15 +22,9 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
+const ERROR_CODE_ACCOUNT_EXISTS = 'le compte existe deja';
 
-const ERROR_MSG_ACCOUNT_EXISTS = `
-  An account with this E-Mail address already exists.
-  Try to login with this account instead. If you think the
-  account is already used from one of the social logins, try
-  to sign in with one of them. Afterward, associate your accounts
-  on your personal account page.
-`;
+const ERROR_MSG_ACCOUNT_EXISTS = ` error`;
 
 class SignUpFormBase extends Component {
     constructor(props) {
@@ -39,7 +34,7 @@ class SignUpFormBase extends Component {
     }
 
      onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
+        const { username,name, email, passwordOne } = this.state;
 
 
         this.props.firebase
@@ -47,6 +42,7 @@ class SignUpFormBase extends Component {
             .then(authUser => {
                 return this.props.firebase.user(authUser.user.uid).set({
                     username,
+                    name,
                     email,
                 });
             })
@@ -83,51 +79,39 @@ class SignUpFormBase extends Component {
             passwordOne,
             passwordTwo,
             error,
+            name,
         } = this.state;
 
         const   isInvalid =
                 passwordOne !== passwordTwo ||
                 passwordOne === '' ||
                 email === '' ||
+                name === '' ||
                 username === '';
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input
-                    name="username"
-                    value={username}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Full Name"
-                />
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <label>
-                </label>
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
-                </button>
+                <div >
+                    <label for="username"><b>User Name</b></label>
+                    <input name="username"  value={username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
 
-                {error && <p>{error.message}</p>}
+                    <label for="username"><b>Name</b></label>
+                    <input name="username"  value={name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
+                    
+                    <label for="email"><b>Email Address</b></label>
+                    <input name="email" value={email} onChange={this.onChange} type="text" placeholder="Email Address"  />
+                    
+                    <label for="passwordOne"><b>Password</b></label>
+                    <input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password"  />
+                    
+                    <label for="passwordTwo"><b>Confirm Password</b></label>
+                    <input name="passwordTwo"  value={passwordTwo} onChange={this.onChange}  type="password" placeholder="Confirm Password"  />
+                    
+                    <button  className="registerbtn" disabled={isInvalid} type="submit">
+                        Sign Up
+                    </button>
+                    {error && <p>{error.message}</p>}
+                </div>
             </form>
         );
     }

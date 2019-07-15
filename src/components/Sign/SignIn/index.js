@@ -8,7 +8,7 @@ import * as ROUTES from '../../../constants/routes';
 import { PasswordForgetLink } from '../../Password/PasswordForget';
 
 	const SignInPage = () => (
-			<div>
+			<div >
 				<h1>SignIn</h1>
 				<SignInForm />
 				<PasswordForgetLink />
@@ -69,7 +69,7 @@ class SignInFormBase extends Component {
 					type="password"
 					placeholder="Password"
 				/>
-				<button disabled={isInvalid} type="submit">
+				<button className="registerbtn" disabled={isInvalid} type="submit">
 					Sign In
 				</button>
 

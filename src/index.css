@@ -139,8 +139,6 @@ html, body {
 	color: #fff;
 }
 
-
-
 .open_button_tweet{
 	background-color: #2d84cc;
 	color: #fff;
@@ -149,3 +147,112 @@ html, body {
 	margin: 0 1em;
 	padding: 0.5em 0.75em;
 }
+
+.home_avatar{
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+}
+
+.home_username{
+	color: #666;
+}
+
+
+/* Add padding to containers */
+.container {
+	padding: 16px;
+	background-color: white;
+	width: 70%;
+	margin: auto;
+  }
+  
+  /* Full-width input fields */
+  input[type=text], input[type=password] {
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	display: inline-block;
+	border: none;
+	background: #f1f1f1;
+  }
+  
+  input[type=text]:focus, input[type=password]:focus {
+	background-color: #ddd;
+	outline: none;
+  }
+  
+  /* Overwrite default styles of hr */
+  hr {
+	border: 1px solid #f1f1f1;
+	margin-bottom: 25px;
+  }
+  
+  /* Set a style for the submit button */
+  .registerbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+  }
+  
+  .registerbtn:hover {
+	opacity: 1;
+  }
+  
+  /* Add a blue text color to links */
+  a {
+	color: rgb(255, 30, 79);
+  }
+
+
+  .signoutbutton{
+	background-color: #2d84cc;
+	color: #fff;
+	border: 1px solid #1f6fb1;
+	border-radius: 5px;
+	margin: 0 1em;
+	padding: 0.5em 0.75em;
+}
+  
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+  }
+  
+  li {
+	float: left;
+  }
+  
+  li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+  }
+  
+  li a:hover:not(.active) {
+	background-color: #111;
+  }
+  
+
+  .card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 300px;
+	margin: auto;
+	text-align: center;
+  }
+  
+  .title {
+	color: grey;
+	font-size: 18px;
+  }

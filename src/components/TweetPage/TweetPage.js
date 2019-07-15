@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
 import TweetList from './TweetList';
 import TweetInput from "./TweetInput";
-
-
+import * as ROUTES from '../../constants/routes';
+import {Link } from 'react-router-dom';
 
 class TweetPage extends Component {
     constructor(props) {
@@ -166,10 +166,10 @@ class TweetPage extends Component {
 
     render() {
         const { text, tweets, loading, authUser } = this.state;
+        const userRoute = ROUTES.USER+"/"+authUser.username;
         return (
                 <div>
-                    <h2>Actu</h2>
-                    {loading && <div>Loading ...</div>}   
+                    {loading && <div>Loading ...</div>}  
                     <button onClick={this.onOpenText} className="open_button_tweet">
                         <span className='fa fa-lg fa-edit'></span> Tweet!
                     </button>

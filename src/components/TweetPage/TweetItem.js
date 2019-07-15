@@ -50,7 +50,7 @@ class TweetItem extends Component {
 
 	render() {
 		const {  tweet, onRemoveTweet} = this.props;
-		const { editMode, editText } = this.state;
+		const { editMode } = this.state;
 		const dateFormat = moment(tweet.createdAt).fromNow()
 		return (
 			<div className="root_Tweet_item">
@@ -75,25 +75,25 @@ class TweetItem extends Component {
 					{editMode ? (
 						<div className="space">
 							<div className="space" onClick={this.onSaveEditText} >
-								<span className='fa fa-star'></span>
+								<span className='fa fa-save'></span>
 								<span className="number">  Save</span>
 							</div>
 							<div className="space" onClick={this.onToggleEditMode} >
-								<span className='fa fa-star'></span>
+								<span className='fa fa-empty-set'></span>
 								<span className="number">   Reset</span>
 							</div>
 						</div>
 
 					) : (
 						<div className="space" onClick={this.onToggleEditMode} >
-							<span className='fa fa-retweet'></span>
+							<span className='fa fa-edit'></span>
 							<span className="number">  Edit</span>
 						</div>
 					)}
 
 					{!editMode && (
 						<div className=" space" onClick={() => onRemoveTweet(tweet.uid)} >
-							<span className='fa fa-retweet'></span>
+							<span className='fas fa-eraser'></span>
 							<span className="number">  Delete</span>
 						</div>
 					)}

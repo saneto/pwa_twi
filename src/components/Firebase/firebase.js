@@ -1,6 +1,9 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/firestore';
+import 'firebase/storage';
+
 
 const config = {
     apiKey: "AIzaSyAe7hufjDHedAdKMIeT_MhjN_Oc1X34HoA",
@@ -20,7 +23,7 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
-
+    this.storage = app.storage();
   }
 
 
@@ -50,7 +53,7 @@ class Firebase {
               uid: authUser.uid,
               email: authUser.email,
               emailVerified: authUser.emailVerified,
-              providerData: authUser.providerData,
+              providerData: authUser,
               ...dbUser,
             };
 
@@ -69,13 +72,18 @@ class Firebase {
 
   users = () => this.db.ref('users');
 
-  message = uid => this.db.ref(`messages/${uid}`);
+  message = id => this.db.ref(`messages/${id}`);
 
   messages = () => this.db.ref('messages');
   
-  tweet = uid => this.db.ref(`tweets/${uid}`);
+  tweet = id => this.db.ref(`tweets/${id}`);
 
   tweets = () => this.db.ref('tweets');
+
+  image = id => this.storage.ref(`images/${id}`);
+
+  images = () => this.storage.ref(`images`);
+
 }
 
 export default Firebase;

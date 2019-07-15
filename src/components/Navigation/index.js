@@ -7,7 +7,7 @@ import { AuthUserContext } from '../Session';
 
 const Navigation = () => (
 	<header className="root">
-		 <h1 className="logo">Github tweet</h1>
+		<h1 className="fa fa-twitter">PWA twitter</h1>
 		<AuthUserContext.Consumer>
 			{authUser => authUser ? (
 					<NavigationAuth authUser={authUser} />
@@ -23,9 +23,6 @@ const NavigationAuth  = ({ authUser }) => (
 	
 	<ul>
 		<li>
-			<Link to={ROUTES.LANDING}>Landing</Link>
-		</li>
-		<li>
 			<Link to={ROUTES.HOME}>Home</Link>
 		</li>
 		<li>
@@ -34,7 +31,7 @@ const NavigationAuth  = ({ authUser }) => (
 		<li>
 			<Link to={ROUTES.LISTEAMIS}>Friend list</Link>
 		</li>
-		<li>
+		<li style={{float: 'right'}}>
 			<SignOutButton />
 		</li>
 	</ul>
@@ -42,9 +39,6 @@ const NavigationAuth  = ({ authUser }) => (
 
 const NavigationNonAuth = () => (
 	<ul>
-		<li>
-			<Link to={ROUTES.LANDING}>Landing</Link>
-		</li>
 		<li>
 			<Link to={ROUTES.SIGN_IN}>Sign In</Link>
 		</li>
