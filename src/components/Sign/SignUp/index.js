@@ -35,10 +35,6 @@ class SignUpFormBase extends Component {
 
      onSubmit = event => {
         const { username,name, email, passwordOne } = this.state;
-        const bio = " ";
-        let listFav = [];
-        let listreTweets = [];
-        let listPhoto = [];
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
@@ -46,10 +42,6 @@ class SignUpFormBase extends Component {
                     username,
                     name,
                     email,
-                    bio,
-                    listFav,
-                    listreTweets,
-                    listPhoto,
                 });
             })
             .then(() => {

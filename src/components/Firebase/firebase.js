@@ -51,7 +51,6 @@ class Firebase {
 							uid: authUser.uid,
 							email: authUser.email,
 							emailVerified: authUser.emailVerified,
-							providerData: authUser,
 							...dbUser,
 						};
 

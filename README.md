@@ -69,3 +69,27 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 
 set HTTPS=true&&npm start
+
+L'ordre de priorité.
+D'abord la pertinance, le volume de recherche et finalement la concurence.
+
+il faut s'assurer que le mot sélectionner contient la localisation, quitte à rajouter au mot clé
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

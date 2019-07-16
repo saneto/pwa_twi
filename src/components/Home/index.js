@@ -15,10 +15,8 @@ const HomePage = () => (
 					</Grid>
 					<Grid item xs={10}>
 						<TweetPage {...authUser} />
-					</Grid>
-					
+					</Grid>					
 				</Grid>
-				
 			)}
 		</AuthUserContext.Consumer>
 			

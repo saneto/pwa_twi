@@ -14,7 +14,12 @@ class UserAccount extends Component
           limit: 5,
           user : props.authUser,
           avatarURL :  props.authUser.src,
+          name : props.authUser.name, 
+          username : props.authUser.username, 
+          email : props.authUser.email, 
+          bio : props.authUser.bio, 
         };
+        console.log(this.state.user);
       }
     handleChangeUsername = event => this.setState({ username: event.target.value });
     handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
@@ -29,46 +34,64 @@ class UserAccount extends Component
         .getDownloadURL()
         .then(url => {
             let user = this.state.user;
-            user.src = url;
+            if(user.listPhoto=== undefined)
+            {
+                user.listPhoto = [];
+            }
             user.listPhoto.push({url : url})
+            user.src = url;
             this.props.firebase.user(user.uid).set({
                 ...user
             });
-            this.setState({ avatarURL : url})
+            this.setState({ avatarURL : url, user : user})
 
         });
     };
 
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
-      };
+      }; 
+
+    onSubmit = event => {
+        const { username,name, email, bio } = this.state;
+        let user = this.state.user;
+        user.username = username;
+        user.name =  name;
+        user.email =   email;
+        user.bio = bio;
+        this.props.firebase.user(this.state.user.uid).set({
+            ...this.state.user
+        }).then(() => {
+
+        });
+        
+        this.setState({  user : user})
+
+        event.preventDefault();
+    };
  
     render()
     {
         const {user} = this.state;
-
-        /*
-            className="avatar"  à garder pour les images miniature 
-        */
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="imgcontainer">
                     <img src={this.state.avatarURL} alt="Avatar" className="avatar_cardVersion" />
                 </div>
                 <div  className="container">
-                    <label htmlFor="username"><b>User Name</b></label>
-                    <input name="username"  value={user.username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
-
-                    <label htmlFor="username"><b>Name</b></label>
-                    <input name="username"  value={user.name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
+                    <label htmlFor="username"><b>UserName</b></label>
+                    <input name="username"  value={this.state.username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
+                    
+                    <label htmlFor="name"><b>Name</b></label>
+                    <input name="name"  value={this.state.name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
                     
                     <label htmlFor="email"><b>Email Address</b></label>
-                    <input name="email" value={user.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
+                    <input name="email" value={this.state.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
                     
                     <label htmlFor="bio"><b>bio</b></label>
                     <textarea 
                             name='bio'
-                            value={user.bio}
+                            value={this.state.bio}
                             onChange={this.onChange}
                     ></textarea>
                    
@@ -84,6 +107,9 @@ class UserAccount extends Component
                         onProgress={this.handleProgress}
                         />
                     </label>
+                    <button  className="registerbtn"  type="submit">
+                        Valider
+                    </button>
                 </div>
             </form>
         );

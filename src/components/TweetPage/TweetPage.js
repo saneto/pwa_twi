@@ -68,22 +68,23 @@ class TweetPage extends Component {
     };
 
     onaddFavorite = (tweet) =>{
-        if(this.state.authUser.likes === undefined)
+        let user = this.state.authUser;
+        if(user.likes === undefined)
         {
-            this.state.authUser.likes = [];
+            user.likes = [];
         }
-        if (this.state.authUser.likes.filter(rt => rt === tweet.uid).length >0 )
+        if (user.likes.filter(rt => rt === tweet.uid).length >0 )
         {
             return;
         }
-        this.state.authUser.likes.push(tweet.uid);
+        user.likes.push(tweet.uid);
         if(tweet.listFav === undefined)
         {
             tweet.listFav = [];
         }
         tweet.listFav.push({
-            userId: this.state.authUser.uid,
-            username: this.state.authUser.email.split('@')[0],
+            userId: user.uid,
+            username: user.username,
         });
         tweet.like++;
         this.props.firebase.tweet(tweet.uid).set({
@@ -93,21 +94,21 @@ class TweetPage extends Component {
 
   
     onReTweet = (tweet) =>{     
-        console.log(this.state.authUser)   
-        if(this.state.authUser.retweets === undefined)
+        let user = this.state.authUser;
+        if(user.retweets === undefined)
         {
-            this.state.authUser.retweets = [];
+            user.retweets = [];
         } 
-        if (this.state.authUser.retweets.filter(rt => rt === tweet.uid).length >0 )
+        if (user.retweets.filter(rt => rt === tweet.uid).length >0 )
         {
             return;
         }
-        this.state.authUser.retweets.push(tweet.uid);
-        let user = this.state.authUser;
+        user.retweets.push(tweet.uid);
         tweet.listreTweets.push({
             text: this.state.text,
-            userId: this.state.authUser.uid,
-            username: this.state.authUser.email.split('@')[0],
+            userId: user.uid,
+            src: user.src,
+            username: user.username,
             createdAt: this.props.firebase.serverValue.TIMESTAMP,
             like: 0,
             retweets: 0,
@@ -128,6 +129,7 @@ class TweetPage extends Component {
             userId: this.state.authUser.uid,
             username: this.state.authUser.email.split('@')[0],
             createdAt: this.props.firebase.serverValue.TIMESTAMP,
+            src: this.state.authUser.src,
             like: 0,
             retweets: 0,
             listreTweets:[],
