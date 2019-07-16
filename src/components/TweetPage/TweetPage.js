@@ -2,8 +2,6 @@ import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
 import TweetList from './TweetList';
 import TweetInput from "./TweetInput";
-import * as ROUTES from '../../constants/routes';
-import {Link } from 'react-router-dom';
 
 class TweetPage extends Component {
     constructor(props) {
@@ -17,7 +15,7 @@ class TweetPage extends Component {
             userNameToReply: '',
             messages: [],
             isReply : false,
-            authUser :  Object.assign({}, props.authUser, { retweets: [] }, { likes: [] }),
+            authUser :   props.authUser,
         }     
     };
   
@@ -89,13 +87,15 @@ class TweetPage extends Component {
     }
 
   
-    onReTweet = (tweet) =>{        
+    onReTweet = (tweet) =>{     
+        console.log(tweet)   
+        console.log(this.state.authUser.retweets)   
         if (this.state.authUser.retweets.filter(rt => rt === tweet.uid).length >0 )
         {
             return;
         }
         this.state.authUser.retweets.push(tweet.uid);
-
+        let user = this.state.authUser;
         if(tweet.listreTweets === undefined)
         {
             tweet.listreTweets = [];
@@ -111,6 +111,9 @@ class TweetPage extends Component {
         tweet.retweets++;
         this.props.firebase.tweet(tweet.uid).set({
             ...tweet
+        });
+        this.props.firebase.user(tweet.uid).set({
+            ...user
         });
 
     }
@@ -165,8 +168,7 @@ class TweetPage extends Component {
       }
 
     render() {
-        const { text, tweets, loading, authUser } = this.state;
-        const userRoute = ROUTES.USER+"/"+authUser.username;
+        const { tweets, loading, authUser } = this.state;
         return (
                 <div>
                     {loading && <div>Loading ...</div>}  

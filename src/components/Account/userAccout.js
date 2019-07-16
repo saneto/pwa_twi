@@ -13,26 +13,8 @@ class UserAccount extends Component
           messages: [],
           limit: 5,
           user : props.authUser,
-          avatarURL :  props.authUser.src
+          avatarURL :  props.authUser.src,
         };
-
-
-            this.props.firebase
-            .image(this.state.user.uid).listAll().then(function(res) {
-                console.log(res)
-                res.prefixes.forEach(function(folderRef) {
-                    console.log(folderRef)
-                });
-                res.items.forEach(function(itemRef) {
-                  // All the items under listRef.
-                  console.log(itemRef.location)
-                  console.log(itemRef.location.bucketOnlyServerUrl())
-                  //console.log(itemRef.location.path())                  
-                  console.log(itemRef.location.fullServerUrl())
-                });
-              }).catch(function(error) {
-                // Uh-oh, an error occurred!
-              });
       }
     handleChangeUsername = event => this.setState({ username: event.target.value });
     handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
@@ -48,18 +30,16 @@ class UserAccount extends Component
         .then(url => {
             let user = this.state.user;
             user.src = url;
+            if(user.listPhoto === undefined)
+            {
+                user.listPhoto = [];
+            }
+            user.listPhoto.push({url : url})
             this.props.firebase.user(user.uid).set({
                 ...user
             });
             this.setState({ avatarURL : url})
 
-        });
-
-        this.props.firebase
-        .image(this.state.user.uid)
-        .listFiles()
-        .then(url => {
-            console.log(url)
         });
     };
 
@@ -90,16 +70,13 @@ class UserAccount extends Component
                     <input name="email" value={user.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
                     
                     <label htmlFor="bio"><b>bio</b></label>
-
-                    <textarea className="tweet_text" 
+                    <textarea 
                             name='bio'
                             value={user.bio}
                             onChange={this.onChange}
                     ></textarea>
                    
-                   
-                   
-                    <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                    <label className="registerbtn" style={{backgroundColor: 'steelblue', color: 'white',   pointer: 'cursor'}}>
                         Select your awesome avatar
                         <FileUploader
                         hidden

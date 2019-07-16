@@ -6,84 +6,77 @@ import 'firebase/storage';
 
 
 const config = {
-    apiKey: "AIzaSyAe7hufjDHedAdKMIeT_MhjN_Oc1X34HoA",
-    authDomain: "superp2-8a0d2.firebaseapp.com",
-    databaseURL: "https://superp2-8a0d2.firebaseio.com",
-    projectId: "superp2-8a0d2",
-    storageBucket: "superp2-8a0d2.appspot.com",
-    messagingSenderId: "499719922525",
-    appId: "1:499719922525:web:cf330b8bb5ce987b"
+	apiKey: "AIzaSyAe7hufjDHedAdKMIeT_MhjN_Oc1X34HoA",
+	authDomain: "superp2-8a0d2.firebaseapp.com",
+	databaseURL: "https://superp2-8a0d2.firebaseio.com",
+	projectId: "superp2-8a0d2",
+	storageBucket: "superp2-8a0d2.appspot.com",
+	messagingSenderId: "499719922525",
+	appId: "1:499719922525:web:cf330b8bb5ce987b"
 };
 
 class Firebase {
-  constructor() {
-    app.initializeApp(config);
+	constructor() {
+		app.initializeApp(config);
 
-    this.serverValue = app.database.ServerValue;
+		this.serverValue = app.database.ServerValue;
 
-    this.auth = app.auth();
-    this.db = app.database();
-    this.storage = app.storage();
-  }
-
-
-  doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
-
-  doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
-
-  doSignOut = () => this.auth.signOut();
-
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+		this.auth = app.auth();
+		this.db = app.database();
+		this.storage = app.storage();
+	}
 
 
-  doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+	doCreateUserWithEmailAndPassword = (email, password) =>
+		this.auth.createUserWithEmailAndPassword(email, password);
 
+	doSignInWithEmailAndPassword = (email, password) =>
+		this.auth.signInWithEmailAndPassword(email, password);
 
-  onAuthUserListener = (next, fallback) =>
-    this.auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        this.user(authUser.uid)
-          .once('value')
-          .then(snapshot => {
-            const dbUser = snapshot.val();
-            authUser = {
-              uid: authUser.uid,
-              email: authUser.email,
-              emailVerified: authUser.emailVerified,
-              providerData: authUser,
-              ...dbUser,
-            };
+	doSignOut = () => this.auth.signOut();
 
-            next(authUser);
-          });
-      } else {
-        fallback();
-      }
-    });
+	doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
-    
+	doPasswordUpdate = password =>
+		this.auth.currentUser.updatePassword(password);
 
+	onAuthUserListener = (next, fallback) =>
+		this.auth.onAuthStateChanged(authUser => {
+			if (authUser) {
+				this.user(authUser.uid)
+					.once('value')
+					.then(snapshot => {
+						const dbUser = snapshot.val();
+						authUser = {
+							uid: authUser.uid,
+							email: authUser.email,
+							emailVerified: authUser.emailVerified,
+							providerData: authUser,
+							...dbUser,
+						};
 
+						next(authUser);
+					});
+			} else {
+				fallback();
+			}
+		});
 
-  user = uid => this.db.ref(`users/${uid}`);
+	user = uid => this.db.ref(`users/${uid}`);
 
-  users = () => this.db.ref('users');
+	users = () => this.db.ref('users');
 
-  message = id => this.db.ref(`messages/${id}`);
+	message = id => this.db.ref(`messages/${id}`);
 
-  messages = () => this.db.ref('messages');
-  
-  tweet = id => this.db.ref(`tweets/${id}`);
+	messages = () => this.db.ref('messages');
+	
+	tweet = id => this.db.ref(`tweets/${id}`);
 
-  tweets = () => this.db.ref('tweets');
+	tweets = () => this.db.ref('tweets');
 
-  image = id => this.storage.ref(`images/${id}`);
+	image = id => this.storage.ref(`images/${id}`);
 
-  images = () => this.storage.ref(`images`);
-
+	images = () => this.storage.ref(`images`);
 }
 
 export default Firebase;

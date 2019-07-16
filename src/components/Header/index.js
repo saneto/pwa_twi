@@ -1,17 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Navigation from '../Navigation';
 
-class Header extends Component{
-    constructor(props)
-    {
-        super(props);
-    }
-
-    render(){
-        return(
-         <Navigation />
-        )
-    };
-}
-
+const Header = () => (
+    <Navigation />
+);
 export default Header;
