@@ -2,7 +2,7 @@ import React from 'react';
 
 const LandingPage = () => (
     <div>
-        qdqsddqsd
+        qdqsddqsd dkqsldqsknknlk
     </div>
 );
 

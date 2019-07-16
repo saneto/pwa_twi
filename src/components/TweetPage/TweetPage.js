@@ -17,8 +17,6 @@ class TweetPage extends Component {
             isReply : false,
             authUser :   props,
         }     
-        
-		console.log(props);
     };
   
     componentDidMount() {

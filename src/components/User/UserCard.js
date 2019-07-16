@@ -4,6 +4,7 @@ import { withFirebase } from '../Firebase';
 import {Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { Grid } from '@material-ui/core';
+
 class UserCard extends Component {
 	
 	constructor(props) {
@@ -42,9 +43,9 @@ class UserCard extends Component {
 					</Link>
 				</p>
 				<p>{user.bio}</p>
-				<Grid container spacing={12}>
+				<Grid container>
 					{listPhoto.map(message => (
-						<Grid item xs={4}>
+						<Grid item xs={4} key={message.url}>
 							<img src={message.url} alt="User_card_P" className="user_card_P" />   
 						</Grid>	
 					))}			
