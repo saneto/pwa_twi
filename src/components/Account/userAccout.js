@@ -30,10 +30,6 @@ class UserAccount extends Component
         .then(url => {
             let user = this.state.user;
             user.src = url;
-            if(user.listPhoto === undefined)
-            {
-                user.listPhoto = [];
-            }
             user.listPhoto.push({url : url})
             this.props.firebase.user(user.uid).set({
                 ...user

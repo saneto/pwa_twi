@@ -15,8 +15,10 @@ class TweetPage extends Component {
             userNameToReply: '',
             messages: [],
             isReply : false,
-            authUser :   props.authUser,
+            authUser :   props,
         }     
+        
+		console.log(props);
     };
   
     componentDidMount() {
@@ -66,7 +68,10 @@ class TweetPage extends Component {
     };
 
     onaddFavorite = (tweet) =>{
-
+        if(this.state.authUser.likes === undefined)
+        {
+            this.state.authUser.likes = [];
+        }
         if (this.state.authUser.likes.filter(rt => rt === tweet.uid).length >0 )
         {
             return;
@@ -88,18 +93,17 @@ class TweetPage extends Component {
 
   
     onReTweet = (tweet) =>{     
-        console.log(tweet)   
-        console.log(this.state.authUser.retweets)   
+        console.log(this.state.authUser)   
+        if(this.state.authUser.retweets === undefined)
+        {
+            this.state.authUser.retweets = [];
+        } 
         if (this.state.authUser.retweets.filter(rt => rt === tweet.uid).length >0 )
         {
             return;
         }
         this.state.authUser.retweets.push(tweet.uid);
         let user = this.state.authUser;
-        if(tweet.listreTweets === undefined)
-        {
-            tweet.listreTweets = [];
-        }
         tweet.listreTweets.push({
             text: this.state.text,
             userId: this.state.authUser.uid,

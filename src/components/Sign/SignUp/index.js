@@ -35,7 +35,10 @@ class SignUpFormBase extends Component {
 
      onSubmit = event => {
         const { username,name, email, passwordOne } = this.state;
-
+        const bio = " ";
+        let listFav = [];
+        let listreTweets = [];
+        let listPhoto = [];
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
@@ -43,6 +46,10 @@ class SignUpFormBase extends Component {
                     username,
                     name,
                     email,
+                    bio,
+                    listFav,
+                    listreTweets,
+                    listPhoto,
                 });
             })
             .then(() => {
@@ -91,19 +98,19 @@ class SignUpFormBase extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div >
-                    <label for="username"><b>User Name</b></label>
+                    <label htmlFor="username"><b>User Name</b></label>
                     <input name="username"  value={username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
 
-                    <label for="name"><b>Name</b></label>
+                    <label htmlFor="name"><b>Name</b></label>
                     <input name="name"  value={name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
                     
-                    <label for="email"><b>Email Address</b></label>
+                    <label htmlFor="email"><b>Email Address</b></label>
                     <input name="email" value={email} onChange={this.onChange} type="text" placeholder="Email Address"  />
                     
-                    <label for="passwordOne"><b>Password</b></label>
+                    <label htmlFor="passwordOne"><b>Password</b></label>
                     <input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password"  />
                     
-                    <label for="passwordTwo"><b>Confirm Password</b></label>
+                    <label htmlFor="passwordTwo"><b>Confirm Password</b></label>
                     <input name="passwordTwo"  value={passwordTwo} onChange={this.onChange}  type="password" placeholder="Confirm Password"  />
                     
                     <button  className="registerbtn" disabled={isInvalid} type="submit">

@@ -11,6 +11,7 @@ class UserCard extends Component {
 		this.state = {
 			user: this.props,
 		};   
+		console.log(props);
 	}
 	
 	onSendPasswordResetEmail = () => {

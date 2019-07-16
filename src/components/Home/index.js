@@ -14,7 +14,7 @@ const HomePage = () => (
 					 	<UserCard {...authUser}/>
 					</Grid>
 					<Grid item xs={10}>
-						<TweetPage authUser={authUser} />
+						<TweetPage {...authUser} />
 					</Grid>
 					
 				</Grid>

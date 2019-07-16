@@ -52,7 +52,6 @@ class TweetItem extends Component {
 		const {  tweet, onRemoveTweet} = this.props;
 		const { editMode } = this.state;
 		const dateFormat = moment(tweet.createdAt).fromNow();
-		console.log(tweet);
 		return (
 			<div className="root_Tweet_item">
 				<div className="user">
