@@ -6,6 +6,7 @@ import TweetInput from "./TweetInput";
 class TweetPage extends Component {
     constructor(props) {
         super(props)
+        console.log(props)
         this.state = { 
             text: '',
             loading: false,
@@ -13,9 +14,8 @@ class TweetPage extends Component {
             limit: 15, 
             openText: false,
             userNameToReply: '',
-            messages: [],
             isReply : false,
-            authUser :   props,
+            authUser :   props.authUser,
         }     
     };
   
@@ -91,7 +91,7 @@ class TweetPage extends Component {
     }
 
   
-    onReTweet = (tweet) =>{     
+    onReTweet = (tweet) =>{    
         let user = this.state.authUser;
         if(user.retweets === undefined)
         {
@@ -102,6 +102,10 @@ class TweetPage extends Component {
             return;
         }
         user.retweets.push(tweet.uid);
+        if(tweet.listreTweets === undefined)
+        {
+            tweet.listreTweets = [];
+        } 
         tweet.listreTweets.push({
             text: this.state.text,
             userId: user.uid,

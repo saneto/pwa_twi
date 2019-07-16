@@ -9,12 +9,12 @@ const HomePage = () => (
 	<div>
 		<AuthUserContext.Consumer>
 			{authUser => (
-				<Grid container spacing={3}>
-					<Grid item xs={2}>
+				<Grid container>
+					<Grid item xs={3}>
 					 	<UserCard {...authUser}/>
 					</Grid>
-					<Grid item xs={10}>
-						<TweetPage {...authUser} />
+					<Grid item xs={9}>
+						<TweetPage authUser = {authUser} />
 					</Grid>					
 				</Grid>
 			)}

@@ -12,6 +12,7 @@ import ListeAmisPage from '../ListeDesAmis';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
+import LandingPage from '../Landing';
 
 const App = () => (
 	<Router>
@@ -19,9 +20,10 @@ const App = () => (
 			<Header />
 			<hr />
 			<div  className="container">
+				<Route exact path={ROUTES.LANDING} component={LandingPage} />
 				<Route path={ROUTES.HOME} component={HomePage} />
 				<Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-				<Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+				<Route path={ROUTES.SIGN_IN} component={SignInPage} />
 				<Route path={ROUTES.LISTEAMIS} component={ListeAmisPage} />
 				<Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage}	/>
 				<Route path={ROUTES.ACCOUNT} component={AccountPage} />
