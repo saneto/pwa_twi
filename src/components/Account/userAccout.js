@@ -34,17 +34,9 @@ class UserAccount extends Component
         .getDownloadURL()
         .then(url => {
             let user = this.state.user;
-            if(user.listPhoto=== undefined)
-            {
-                user.listPhoto = [];
-            }
-            user.listPhoto.push({url : url})
-            user.src = url;
-            this.props.firebase.user(user.uid).set({
-                ...user
-            });
-            this.setState({ avatarURL : url, user : user})
-
+            this.props.firebase.user(user.uid).child('listPhoto').push({url : url});
+            this.props.firebase.user(user.uid).update({src : url});
+            this.setState({ avatarURL : url})
         });
     };
 
@@ -62,11 +54,8 @@ class UserAccount extends Component
         this.props.firebase.user(this.state.user.uid).set({
             ...this.state.user
         }).then(() => {
-
+            this.setState({  user : user})
         });
-        
-        this.setState({  user : user})
-
         event.preventDefault();
     };
  

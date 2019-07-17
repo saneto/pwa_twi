@@ -6,7 +6,6 @@ import TweetInput from "./TweetInput";
 class TweetPage extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = { 
             text: '',
             loading: false,
@@ -15,8 +14,11 @@ class TweetPage extends Component {
             openText: false,
             userNameToReply: '',
             isReply : false,
-            authUser :   props.authUser,
-        }     
+            retweets: (this.props.authUser.listRetweet) ?  Object.values(this.props.authUser.listRetweet)  : [],
+            likes: (this.props.authUser.listLike) ?  Object.values(this.props.authUser.listLike)  : [],
+            authUser :  this.props.authUser,
+        }   
+        console.log(this.state)  
     };
   
     componentDidMount() {
@@ -65,64 +67,39 @@ class TweetPage extends Component {
         }
     };
 
-    onaddFavorite = (tweet) =>{
-        let user = this.state.authUser;
-        if(user.likes === undefined)
-        {
-            user.likes = [];
+    onaddFavorite = (tweet, user) =>{
+        if (this.state.likes.filter(rt => rt === tweet.uid).length === 0 )
+        {   
+            this.props.firebase.tweet(tweet.uid).child('listLike').push({
+                userId: user.uid,
+                username: user.username,
+            });
+            tweet.like++;
+            this.props.firebase.tweet(tweet.uid).child('like').set(tweet.like);
+            this.props.firebase.user(user.uid).child('listLike').push(tweet.uid);
+            this.state.likes.push(tweet.uid);
         }
-        if (user.likes.filter(rt => rt === tweet.uid).length >0 )
-        {
-            return;
-        }
-        user.likes.push(tweet.uid);
-        if(tweet.listFav === undefined)
-        {
-            tweet.listFav = [];
-        }
-        tweet.listFav.push({
-            userId: user.uid,
-            username: user.username,
-        });
-        tweet.like++;
-        this.props.firebase.tweet(tweet.uid).set({
-            ...tweet
-        });
     }
 
   
-    onReTweet = (tweet) =>{    
-        let user = this.state.authUser;
-        if(user.retweets === undefined)
-        {
-            user.retweets = [];
-        } 
-        if (user.retweets.filter(rt => rt === tweet.uid).length >0 )
-        {
-            return;
-        }
-        user.retweets.push(tweet.uid);
-        if(tweet.listreTweets === undefined)
-        {
-            tweet.listreTweets = [];
-        } 
-        tweet.listreTweets.push({
-            text: this.state.text,
-            userId: user.uid,
-            src: user.src,
-            username: user.username,
-            createdAt: this.props.firebase.serverValue.TIMESTAMP,
-            like: 0,
-            retweets: 0,
-        });
-        tweet.retweets++;
-        this.props.firebase.tweet(tweet.uid).set({
-            ...tweet
-        });
-        this.props.firebase.user(tweet.uid).set({
-            ...user
-        });
-
+    onReTweet = (tweet, user) =>{    
+         if (this.state.retweets.filter(rt => rt === tweet.uid).length === 0 )
+         {   
+            tweet.retweets++;
+            this.props.firebase.tweet(tweet.uid).child('listreTweets').push({
+                text: this.state.text,
+                userId: user.uid,
+                src: user.src,
+                username: user.username,
+                createdAt: this.props.firebase.serverValue.TIMESTAMP,
+                like: 0,
+                retweets: 0,
+            });
+            this.props.firebase.tweet(tweet.uid).child('retweets').set(tweet.retweets);
+            this.props.firebase.user(user.uid).child('listRetweet').push(tweet.uid);
+            this.state.retweets.push(tweet.uid);
+         }
+       
     }
 
     onCreateTweet = (event) => {

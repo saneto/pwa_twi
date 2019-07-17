@@ -4,7 +4,6 @@ import moment from 'moment';
 class TweetItem extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			pressFavorite: false,
 			pressRetweet: false,
@@ -14,7 +13,7 @@ class TweetItem extends Component {
 	}
 
 	onPressRetweet =() => {
-		this.props.onReTweet(this.props.tweet);
+		this.props.onReTweet(this.props.tweet, this.props.authUser);
 		this.setState({
 		  pressRetweet: true
 		})
@@ -26,7 +25,7 @@ class TweetItem extends Component {
 
 	 
 	onPressFavorite =() => {
-		this.props.onaddFavorite(this.props.tweet);
+		this.props.onaddFavorite(this.props.tweet, this.props.authUser);
 		this.setState({
 			pressFavorite: true
 		})

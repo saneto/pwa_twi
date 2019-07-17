@@ -28,7 +28,7 @@ class UserCard extends Component {
 		const userRoute = ROUTES.USER+"/"+user.username;
 		return (
 			<div className="card">
-				<Link to={userRoute}>
+				<Link to={ROUTES.ACCOUNT}>
 					<img src={user.src} alt="singe" style={{ width:'100%' }}/>  
 				
 				</Link>
