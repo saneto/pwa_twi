@@ -12,12 +12,14 @@ const TweetList = ({
 	onRemoveTweet,
 	onFollow,
 	follow,
+	name,
 }) => (
 	<div className="root_listTweet">
 		{tweets.map(tweet => (
 			<TweetItem 	key={tweet.uid}
 						authUser={authUser}
 						tweet={tweet}
+						name = {name}
 						onReTweet ={onReTweet}
 						onaddFavorite={onaddFavorite}
 						onReplyTweet={onReplyTweet}

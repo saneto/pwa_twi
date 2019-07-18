@@ -53,7 +53,6 @@ class Firebase {
 							emailVerified: authUser.emailVerified,
 							...dbUser,
 						};
-
 						next(authUser);
 					});
 			} else {
@@ -73,13 +72,17 @@ class Firebase {
 
 	tweets = () => this.db.ref('tweets');
 
+	chat = id => this.db.ref(`chats/${id}`);
+
+	chats = () => this.db.ref(`chats`);
+
+	notification = id => this.db.ref(`notifications/${id}`);
+
+	notifications = () => this.db.ref(`notifications`);
+
 	image = id => this.storage.ref(`images/${id}`);
 
 	images = () => this.storage.ref(`images`);
-
-	chat = id => this.storage.ref(`chats/${id}`);
-
-	chats = () => this.storage.ref(`chats`);
 }
 
 export default Firebase;

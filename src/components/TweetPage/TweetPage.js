@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
 import TweetList from './TweetList';
 import TweetInput from "./TweetInput";
+import { withAuthorization } from '../Session';
+import { compose } from 'recompose';
 
 class TweetPage extends Component {
     constructor(props) {
@@ -19,6 +21,12 @@ class TweetPage extends Component {
             follow: (this.props.authUser.following) ?  Object.values(this.props.authUser.following)  : [],
             authUser :  this.props.authUser,
         }   
+      /* this.props.firebase.notifications().push({
+            createdAt: this.props.firebase.serverValue.TIMESTAMP,
+            uid: this.props.authUser.uid
+        });*/
+
+
     };
   
     componentDidMount() {
@@ -48,6 +56,7 @@ class TweetPage extends Component {
                     }
 
             });
+            
     };
 
 
@@ -113,6 +122,38 @@ class TweetPage extends Component {
         {   
             this.props.firebase.user(followingId).child('followers').push(user.uid);
             this.props.firebase.user(user.uid).child('following').push(followingId);
+            let uid =user.uid;
+            let text = "Current user follow you";
+            let vue = false;
+           /* this.props.firebase.notifications()
+                                .orderByChild("followingId")
+                                .equalTo(followingId)
+                                .child('newNot')
+                                .push({
+                                    uid,
+                                    text,
+                                    vue,
+                                });*/
+            this.props.firebase.notifications().orderByChild('uid').equalTo(followingId).on("value", snapshot =>  {
+                snapshot.forEach( data => {                   
+                    this.props.firebase.notification(data.key).child('newNot').push({
+                        followingId,
+                        text,
+                        vue,
+                    });
+                });
+            });
+            
+            
+           /* .child("uid").equalTo(followingId).once('value', snapshot => {
+                console.log(snapshot.val())
+                snapshot.forEach(child =>{
+                    if(child.val()===user.uid)
+                    {
+                        child.ref.remove();
+                    
+                });
+            })}*/
             this.state.follow.push(followingId);
         }else{
             this.props.firebase.user(followingId).child("followers").once('value', snapshot => {
@@ -137,7 +178,6 @@ class TweetPage extends Component {
     }
 
     onCreateTweet = (event) => {
-        console.log( this.state.authUser)
         this.props.firebase.tweets().push({
             text: this.state.text,
             userId: this.state.authUser.uid,
@@ -183,12 +223,18 @@ class TweetPage extends Component {
         this.setState({ text: value });
     };
     onOpenText  = event =>{
+        this.onUpdate();
         event.preventDefault()
-        this.setState({ openText: true })
+        this.setState({ openText: true})
       }
 
+
+    onUpdate = () =>{
+        this.changeStateabc.current.toto();
+    }
+
     render() {
-        const { tweets, loading, authUser, follow } = this.state;
+        const { tweets, loading, authUser, follow,name } = this.state;
         return (
                 <div>
                     {loading && <div>Loading ...</div>}  
@@ -201,6 +247,7 @@ class TweetPage extends Component {
                         <TweetList
                             authUser={authUser}
                             tweets={tweets}
+                            name = {name}
                             onEditTweet={this.onEditTweet}
                             onRemoveTweet={this.onRemoveTweet}
                             onReTweet ={this.onReTweet}
@@ -224,4 +271,9 @@ class TweetPage extends Component {
 
 
 
-export default withFirebase(TweetPage) ;
+const condition = authUser => !!authUser;
+
+export default compose(
+    withFirebase,
+	withAuthorization(condition),
+)(TweetPage);

@@ -11,6 +11,7 @@ class ListeAmisPage extends Component{
 		this.state={
 			loading: true
 		}
+		console.log(props)
 		this.props.firebase.tweets().child("listreTweets").orderByChild("tweet").equalTo("azsqdqs").on("value", snapshot => {
 			console.log(snapshot.val());
 		});

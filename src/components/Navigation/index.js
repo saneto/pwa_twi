@@ -29,7 +29,10 @@ const NavigationAuth  = ({ authUser }) => (
 			<Link to={ROUTES.ACCOUNT}>Account</Link>
 		</li>
 		<li>
-			<Link to={ROUTES.LISTEAMIS}>Friend list</Link>
+			<Link to={ROUTES.LISTEAMIS}>messagerie</Link>
+		</li>
+		<li>
+			<Link to={ROUTES.LISTEAMIS}>Notification</Link>
 		</li>
 		<li style={{float: 'right'}}>
 			<SignOutButton />
@@ -43,8 +46,8 @@ const NavigationNonAuth = () => (
 			<Link to={ROUTES.SIGN_IN}>Sign In</Link>
 		</li>
 		<li>
-		<Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-	</li>
+			<Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+		</li>
 	</ul>
 );
 	

@@ -6,3 +6,4 @@ export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const LISTEAMIS = '/listeAmis';
 export const USER = '/user';
+export const NOTIFICATION ='/notification'

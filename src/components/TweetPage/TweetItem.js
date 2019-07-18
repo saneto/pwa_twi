@@ -13,6 +13,7 @@ class TweetItem extends Component {
 			pressFavorite: false,
 			pressRetweet: false,
 			editMode: false,
+			name : this.props.name,
 			editText: this.props.tweet.text,
 			followTexte : (followState) ?   "Unfollow"  : "Follow",
 			followState : followState
@@ -67,6 +68,11 @@ class TweetItem extends Component {
 		this.props.onFollow(this.props.tweet.userId, this.props.authUser);
 	};
 
+	toto = ()=>{
+		console.log("j'ai reussi");
+	}
+
+
 	render() {
 		const {  tweet, onRemoveTweet} = this.props;
 		const { editMode } = this.state;
@@ -77,7 +83,7 @@ class TweetItem extends Component {
 					<span className="imgcontainer space"> 
 						<img src={tweet.src} alt="Avatar" className="avatar" />  
 					</span>  
-					<span className="username space">   {tweet.username}</span>
+					<span className="username space">   {tweet.username}      {this.state.name}</span>
           			<span className="date space">   {dateFormat}</span>
 					{tweet.editedAt && <span>(Edited)</span>}
 					<button className="signoutbutton" type="button" onClick={this.onFollow}>

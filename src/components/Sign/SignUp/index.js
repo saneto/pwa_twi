@@ -40,6 +40,7 @@ class SignUpFormBase extends Component {
             .then(authUser => {
                 let uid=authUser.user.uid;
                 let src = "https://firebasestorage.googleapis.com/v0/b/superp2-8a0d2.appspot.com/o/images%2Fdefault_photo%2F250px-Ouisticram-Pt.png?alt=media&token=c48c3326-e329-4faa-838c-40454802b632";
+               this.setState({uid : uid})
                 return this.props.firebase.user(authUser.user.uid).set({
                     username,
                     name,
@@ -49,6 +50,12 @@ class SignUpFormBase extends Component {
                 });
             })
             .then(() => {
+                this.notifications().push(
+                    {
+                        uid: this.state.uid
+                    }
+                );
+               // this.props.firebase.user(this.state.uid).set(this.state.uid);
                 return this.props.firebase.doSendEmailVerification();
             })
             .then(() => {
