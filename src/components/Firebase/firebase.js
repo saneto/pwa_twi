@@ -76,6 +76,10 @@ class Firebase {
 	image = id => this.storage.ref(`images/${id}`);
 
 	images = () => this.storage.ref(`images`);
+
+	chat = id => this.storage.ref(`chats/${id}`);
+
+	chats = () => this.storage.ref(`chats`);
 }
 
 export default Firebase;

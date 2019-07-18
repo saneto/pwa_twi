@@ -45,6 +45,7 @@ class UserAccount extends Component
       }; 
 
     onSubmit = event => {
+        console.log(this.state.user)
         const { username,name, email, bio } = this.state;
         let user = this.state.user;
         user.username = username;

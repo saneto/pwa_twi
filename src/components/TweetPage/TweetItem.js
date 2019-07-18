@@ -4,11 +4,18 @@ import moment from 'moment';
 class TweetItem extends Component {
 	constructor(props) {
 		super(props);
+		let followState = true;
+		if (this.props.follow.filter(rt => rt === this.props.tweet.userId).length === 0 )
+        {   
+			followState = false;
+        }
 		this.state = {
 			pressFavorite: false,
 			pressRetweet: false,
 			editMode: false,
 			editText: this.props.tweet.text,
+			followTexte : (followState) ?   "Unfollow"  : "Follow",
+			followState : followState
 		};
 	}
 
@@ -42,9 +49,22 @@ class TweetItem extends Component {
 	   
 	onToggleEditMode = () => {
 		this.setState(state => ({
-		editMode: !state.editMode,
-		editText: this.props.tweet.text,
+			editMode: !state.editMode,
+			editText: this.props.tweet.text,
 		}));
+	};
+	
+	onFollow= () => {
+		let text = "Follow";
+		if(!this.state.followState)
+		{
+			text = "Unfollow";
+		}
+		this.setState(state => ({
+			followState: !state.followState,
+			followTexte : text
+		}));
+		this.props.onFollow(this.props.tweet.userId, this.props.authUser);
 	};
 
 	render() {
@@ -52,7 +72,7 @@ class TweetItem extends Component {
 		const { editMode } = this.state;
 		const dateFormat = moment(tweet.createdAt).fromNow();
 		return (
-			<div className="root_Tweet_item">
+			<div key={tweet.uid} className="root_Tweet_item">
 				<div className="user">
 					<span className="imgcontainer space"> 
 						<img src={tweet.src} alt="Avatar" className="avatar" />  
@@ -60,6 +80,9 @@ class TweetItem extends Component {
 					<span className="username space">   {tweet.username}</span>
           			<span className="date space">   {dateFormat}</span>
 					{tweet.editedAt && <span>(Edited)</span>}
+					<button className="signoutbutton" type="button" onClick={this.onFollow}>
+						{this.state.followTexte}
+					</button>
 				</div>
 				<h3>{tweet.text}</h3>
 				<div className="buttons">
@@ -74,7 +97,7 @@ class TweetItem extends Component {
 						<span className='fa fa-star'></span>
 						<span className="number">{tweet.like}   Like</span>
 					</div>
-					{editMode ? (
+				{/*	{editMode ? (
 						<div className="space">
 							<div className="space" onClick={this.onSaveEditText} >
 								<span className='fa fa-save'></span>
@@ -91,18 +114,14 @@ class TweetItem extends Component {
 							<span className='fa fa-edit'></span>
 							<span className="number">  Edit</span>
 						</div>
-					)}
+					)}*/}
 
 					{!editMode && (
-						<div className=" space" onClick={() => onRemoveTweet(tweet.uid)} >
+						<div className=" space" onClick={() => onRemoveTweet(tweet.tid)} >
 							<span className='fas fa-eraser'></span>
 							<span className="number">  Delete</span>
 						</div>
-					)}
-
-
-
-										
+					)}				
 				</div>
 			</div>
 		);

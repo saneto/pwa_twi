@@ -20,17 +20,12 @@ class UserCard extends Component {
 
 	render() {
 		const { user } = this.state ||  [];
-		let  listPhoto = user.listPhoto;
-		if(listPhoto=== undefined)
-		{
-			listPhoto = [];
-		}
+		let  listPhoto = (user.listPhoto) ?  Object.values(user.listPhoto)  : [] ;
 		const userRoute = ROUTES.USER+"/"+user.username;
 		return (
 			<div className="card">
 				<Link to={ROUTES.ACCOUNT}>
 					<img src={user.src} alt="singe" style={{ width:'100%' }}/>  
-				
 				</Link>
 				<h1>
 					<Link to={userRoute}>
