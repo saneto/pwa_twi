@@ -24,22 +24,22 @@ class NotificationPage extends Component {
         this.props.firebase.notification(this.state.authUser.notifId)
             .limitToLast(this.state.limit)
             .on('value', snapshot => {
-                    const notificationsObject = snapshot.val();
-                    if (notificationsObject) {
-                        const notificationsList = Object.keys(notificationsObject).map(key => ({
-                            ...notificationsObject[key],
-                            nid: key,
-                        }));
-                    
-                        this.setState({
-                            notifications: notificationsList,
-                            loading: false,
-                        });
-                    } else {
-                        this.setState({ notifications: null, loading: false });
-                    }
+                const notificationsObject = snapshot.val();
+                if (notificationsObject) {
+                    const notificationsList = Object.keys(notificationsObject).map(key => ({
+                        ...notificationsObject[key],
+                        nid: key,
+                    }));
+                
+                    this.setState({
+                        notifications: notificationsList,
+                        loading: false,
+                    });
+                } else {
+                    this.setState({ notifications: null, loading: false });
+                }
 
-            });
+        });
     };
 
     render(){
@@ -51,7 +51,9 @@ class NotificationPage extends Component {
                 {loading && <div>Loading ...</div>}  
                 <ul id="myUL">
                     {notifications.map(notification => (
-                        <li>Hit the gym</li>
+                        <div>
+                        <li style={{backgroundColor: "lightblue"}}>{notification.message}</li>
+                        <br/></div>
                     )).reverse()}
                 </ul>
             </div>
