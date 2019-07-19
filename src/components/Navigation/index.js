@@ -32,7 +32,7 @@ const NavigationAuth  = ({ authUser }) => (
 			<Link to={ROUTES.LISTEAMIS}>messagerie</Link>
 		</li>
 		<li>
-			<Link to={ROUTES.LISTEAMIS}>Notification</Link>
+			<Link to={ROUTES.NOTIFICATION}>Notification</Link>
 		</li>
 		<li style={{float: 'right'}}>
 			<SignOutButton />

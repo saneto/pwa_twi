@@ -1,15 +1,16 @@
 import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
-import { AuthUserContext, withAuthorization } from '../Session';
-
+import {  withAuthorization } from '../Session';
+//AuthUserContext
 class NotificationPage extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = { 
             authUser :  this.props.authUser,
+            notifications: [],
             limit : 20,
+            loading: true,
         }   
     };
   
@@ -20,9 +21,7 @@ class NotificationPage extends Component {
     onListenForTweets = () => {
         this.setState({ loading: true });
 
-        this.props.firebase.notifications()
-            .orderByChild('uid')
-            .equalTo(this.state.authUser.uid)
+        this.props.firebase.notification(this.state.authUser.notifId)
             .limitToLast(this.state.limit)
             .on('value', snapshot => {
                     const notificationsObject = snapshot.val();
@@ -44,11 +43,17 @@ class NotificationPage extends Component {
     };
 
     render(){
-        const { loading} = this.state;
+        const {notifications, loading} = this.state;
+        console.log(this.state)
         console.log(this.state)
         return(
             <div>
                 {loading && <div>Loading ...</div>}  
+                <ul id="myUL">
+                    {notifications.map(notification => (
+                        <li>Hit the gym</li>
+                    )).reverse()}
+                </ul>
             </div>
         )
     }

@@ -50,12 +50,10 @@ class SignUpFormBase extends Component {
                 });
             })
             .then(() => {
-                this.notifications().push(
-                    {
-                        uid: this.state.uid
-                    }
-                );
-               // this.props.firebase.user(this.state.uid).set(this.state.uid);
+                let notifId = this.props.firebase.notifications().push().key;
+                this.props.firebase.user(this.state.uid).update({
+                    notifId: notifId
+                });
                 return this.props.firebase.doSendEmailVerification();
             })
             .then(() => {

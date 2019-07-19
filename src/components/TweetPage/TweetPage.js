@@ -21,16 +21,11 @@ class TweetPage extends Component {
             follow: (this.props.authUser.following) ?  Object.values(this.props.authUser.following)  : [],
             authUser :  this.props.authUser,
         }   
-      /* this.props.firebase.notifications().push({
-            createdAt: this.props.firebase.serverValue.TIMESTAMP,
-            uid: this.props.authUser.uid
-        });*/
-
-
     };
   
     componentDidMount() {
         this.onListenForTweets();
+        this.onListenForUserDataUpdate();
     };
 
     onListenForTweets = () => {
@@ -55,9 +50,18 @@ class TweetPage extends Component {
                         this.setState({ tweets: null, loading: false });
                     }
 
-            });
-            
+            });        
     };
+
+    onListenForUserDataUpdate=()=>{
+        this.props.firebase.user(this.state.authUser.uid).on('value', snapshot=>
+        {
+            this.setState({
+                authUser:snapshot.val(),
+            });
+        });
+           
+    }
 
 
     onCloseText = (event) => {
@@ -122,38 +126,11 @@ class TweetPage extends Component {
         {   
             this.props.firebase.user(followingId).child('followers').push(user.uid);
             this.props.firebase.user(user.uid).child('following').push(followingId);
-            let uid =user.uid;
-            let text = "Current user follow you";
-            let vue = false;
-           /* this.props.firebase.notifications()
-                                .orderByChild("followingId")
-                                .equalTo(followingId)
-                                .child('newNot')
-                                .push({
-                                    uid,
-                                    text,
-                                    vue,
-                                });*/
-            this.props.firebase.notifications().orderByChild('uid').equalTo(followingId).on("value", snapshot =>  {
-                snapshot.forEach( data => {                   
-                    this.props.firebase.notification(data.key).child('newNot').push({
-                        followingId,
-                        text,
-                        vue,
-                    });
-                });
-            });
-            
-            
-           /* .child("uid").equalTo(followingId).once('value', snapshot => {
-                console.log(snapshot.val())
-                snapshot.forEach(child =>{
-                    if(child.val()===user.uid)
-                    {
-                        child.ref.remove();
-                    
-                });
-            })}*/
+            this.props.firebase.notification(user.notifId).push({
+                uid : user.uid,
+                message : "l'utilisateur vous a follow",
+                vue : false,
+            })
             this.state.follow.push(followingId);
         }else{
             this.props.firebase.user(followingId).child("followers").once('value', snapshot => {
