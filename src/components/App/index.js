@@ -8,10 +8,11 @@ import SignInPage from '../Sign/SignIn';
 import PasswordForgetPage from '../Password/PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
-import ListeAmisPage from '../ListeDesAmis';
+import ListeAmisPage from '../Chat';
 import LandingPage from '../Landing';
 import NotificationPage from '../Notification';
 import ListOfUserPage from '../ListOfUsers';
+import Navigation from '../Navigation';
 
 
 import * as ROUTES from '../../constants/routes';
@@ -21,10 +22,12 @@ const App = () => (
 	<Router>
 		<div>
 			<Header />
+
+			<Navigation />
 			<hr />
 			<div  className="container">
-				<Route exact path={ROUTES.LANDING} component={LandingPage} />
-				<Route path={ROUTES.HOME} component={HomePage} />
+				<Route  exact path={ROUTES.LANDING} component={LandingPage} />
+				<Route  path={ROUTES.HOME} component={HomePage} />
 				<Route path={ROUTES.SIGN_UP} component={SignUpPage} />
 				<Route path={ROUTES.SIGN_IN} component={SignInPage} />
 				<Route path={ROUTES.LISTEAMIS} component={ListeAmisPage} />
@@ -36,5 +39,6 @@ const App = () => (
 		</div>
 	</Router>
 );
+
 
 export default withAuthentication(App);

@@ -19,7 +19,6 @@ class UserAccount extends Component
           email : props.authUser.email, 
           bio : props.authUser.bio, 
         };
-        console.log(this.state.user);
       }
     handleChangeUsername = event => this.setState({ username: event.target.value });
     handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
@@ -45,7 +44,6 @@ class UserAccount extends Component
       }; 
 
     onSubmit = event => {
-        console.log(this.state.user)
         const { username,name, email, bio } = this.state;
         let user = this.state.user;
         user.username = username;
@@ -85,7 +83,7 @@ class UserAccount extends Component
                             onChange={this.onChange}
                     ></textarea>
                    
-                    <label className="registerbtn" style={{backgroundColor: 'steelblue', color: 'white',   pointer: 'cursor'}}>
+                    <label className="registerbtn" style={{backgroundColor: 'steelblue', color: 'white', width:'100%' , pointer: 'cursor'}}>
                         Select your awesome avatar
                         <FileUploader
                         hidden

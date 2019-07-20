@@ -2,7 +2,8 @@ import React, { Component } from "react"
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import {  withAuthorization } from '../Session';
-//AuthUserContext
+import NotificationCard from './NotificationCard';
+
 class NotificationPage extends Component {
     constructor(props) {
         super(props)
@@ -12,11 +13,17 @@ class NotificationPage extends Component {
             limit : 20,
             loading: true,
         }   
+        
+		this.props.firebase.notifications().off();
     };
   
     componentDidMount() {
         this.onListenForTweets();
     };
+
+    componentWillUnmount() {
+		this.props.firebase.notifications().off();
+	}
 
     onListenForTweets = () => {
         this.setState({ loading: true });
@@ -44,17 +51,13 @@ class NotificationPage extends Component {
 
     render(){
         const {notifications, loading} = this.state;
-        console.log(this.state)
-        console.log(this.state)
         return(
             <div>
                 {loading && <div>Loading ...</div>}  
-                <ul id="myUL">
-                    {notifications.map(notification => (
-                        <div>
-                        <li style={{backgroundColor: "lightblue"}}>{notification.message}</li>
-                        <br/></div>
-                    )).reverse()}
+                <ul >
+                    {notifications ? notifications.map(notification => (
+                        <NotificationCard key={notification.nid} notification={notification}/>
+                    )).reverse() : <div>Vous n'avez aucune notification</div>}
                 </ul>
             </div>
         )

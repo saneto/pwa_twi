@@ -68,11 +68,6 @@ class TweetItem extends Component {
 		this.props.onFollow(this.props.tweet.userId, this.props.authUser);
 	};
 
-	toto = ()=>{
-		console.log("j'ai reussi");
-	}
-
-
 	render() {
 		const {  tweet, onRemoveTweet} = this.props;
 		const { editMode } = this.state;

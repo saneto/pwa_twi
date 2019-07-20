@@ -62,8 +62,7 @@ class TweetPage extends Component {
         });
            
     }
-
-
+    
     onCloseText = (event) => {
         event.preventDefault()
         this.setState({ openText: false })
@@ -72,14 +71,14 @@ class TweetPage extends Component {
     renderTweetInput = () => {
         if (this.state.openText) {
             return (
-                <TweetInput
-                    authUser={this.state.authUser}
-                    onChangeText={this.onChangeText}
-                    onCreateTweet={this.onCreateTweet}
-                    text = {this.state.text}
-                    onCloseText={this.onCloseText}
-                    userNameToReply = {this.state.userNameToReply}
-                />
+                    <TweetInput
+                        authUser={this.state.authUser}
+                        onChangeText={this.onChangeText}
+                        onCreateTweet={this.onCreateTweet}
+                        text = {this.state.text}
+                        onCloseText={this.onCloseText}
+                        userNameToReply = {this.state.userNameToReply}
+                    />
             )
         }
     };
@@ -155,7 +154,7 @@ class TweetPage extends Component {
     }
 
     onCreateTweet = (event) => {
-        this.props.firebase.tweets().push({
+        let key = this.props.firebase.tweets().push({
             text: this.state.text,
             userId: this.state.authUser.uid,
             username: this.state.authUser.username,
@@ -165,8 +164,9 @@ class TweetPage extends Component {
             retweets: 0,
             listreTweets:[],
             listFav:[],
-        });
+        }).key;
 
+        this.props.firebase.user(this.state.authUser.uid).child('myTweet').push(key);
         this.setState({ text: '', openText: false });
         event.preventDefault();
     };
@@ -200,14 +200,8 @@ class TweetPage extends Component {
         this.setState({ text: value });
     };
     onOpenText  = event =>{
-        this.onUpdate();
         event.preventDefault()
         this.setState({ openText: true})
-      }
-
-
-    onUpdate = () =>{
-        this.changeStateabc.current.toto();
     }
 
     render() {
@@ -215,11 +209,12 @@ class TweetPage extends Component {
         return (
                 <div>
                     {loading && <div>Loading ...</div>}  
-                    <button onClick={this.onOpenText} className="open_button_tweet">
-                        <span className='fa fa-lg fa-edit'></span> Tweet!
-                    </button>
-                    {this.renderTweetInput()}
-
+                    <div className="root_Tweet_item">
+                        <button onClick={this.onOpenText} className="open_button_tweet">
+                            <span className='fa fa-lg fa-edit'></span> Tweet!
+                        </button>
+                        {this.renderTweetInput()}
+                    </div>
                     {tweets && (
                         <TweetList
                             authUser={authUser}

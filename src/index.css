@@ -3,21 +3,137 @@
 }
 /* Inline your critical styles */
 html, body {
-  /* Define app variables */
-  --app-bg-color: #fafafa;
-  --app-text-color: #313131;
-  --app-card-color: #ffffff;
-  --app-grey-color: #E2E2E2;
-  --app-header-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+	--app-bg-color: #fafafa;
+	--app-text-color: #313131;
+	--app-card-color: #ffffff;
+	--app-grey-color: #E2E2E2;
+	--app-header-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 
-  min-height: 100%;
-  margin: 0 auto;
-  padding: 0;
-  background-color: var(--app-bg-color);
-  font-size: 16px;
-  font-family: sans-serif;
-  color: var(--app-text-color);
+	min-height: 100%;
+	margin: 0 auto;
+	padding: 5px;
+	background-color: var(--app-bg-color);
+	font-size: 16px;
+	font-family: sans-serif;
+	color: var(--app-text-color);
 }
+
+.container {
+	background-color: white;
+	margin: auto;
+}
+
+.navbar {
+	overflow: hidden;
+	background-color: #333;
+	position: sticky;
+	position: -webkit-sticky;
+	top: 0;
+}
+
+.navbar a {
+	float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 20px;
+	text-decoration: none;
+}
+
+
+.navbar a.right {
+	float: right;
+}
+
+.navbar a:hover 
+{
+	background-color: rgb(5, 179, 202);
+	color: black;
+}
+
+.navbar a.active {
+	background-color: #666;
+	color: white;
+}
+
+
+
+
+/* Tweet CSS */
+
+.leftcolumn {   
+	float: left;
+	width: 25%;
+}
+
+.rightcolumn {
+	float: left;
+	width: 75%;
+	padding-left: 20px;
+}
+
+.title {
+	color: grey;
+	font-size: 18px;
+}
+  
+.card {
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 300px;
+	padding: 20px;
+	margin: auto;
+	text-align: center;
+}
+
+.user_card_P
+{
+	width: 100%;
+	height: 100%;
+}
+
+
+.avatar_cardVersion{
+	width: 40%;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+	border-radius: 50%;
+}
+
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.space{
+	margin-right: 0.5em;
+}
+
+
+.registerbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px 20px;
+	margin: 8px 0;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+}
+.registerbtn:hover {
+	opacity: 1;
+}
+
+
+
+
+
+
+
+
+
 
 
 .root{
@@ -59,19 +175,7 @@ html, body {
 	height: 34px;
 	border-radius: 50%;
 }
-.user_card_P
-{
-	width: 100%;
-	height: 100%;
-}
 
-.avatar_cardVersion{
-	width: 40%;
-	display: block;
-  	margin-left: auto;
-  	margin-right: auto;
-	border-radius: 50%;
-}
 
 .displayName{
 	font-weight: bold;
@@ -104,10 +208,6 @@ html, body {
 	margin-left: 0.25em;
 }
 
-.space{
-	margin-right: 3em;
-}
-
 .rtGreen{
 	color: #20883f;
 	margin-right: 3em;
@@ -115,10 +215,6 @@ html, body {
 
 .favYellow{
 	color: #e2c400;
-}
-
-.root_listTweet{
-  margin: 0.5em;
 }
 
 .tweet_text{
@@ -159,7 +255,17 @@ html, body {
 	border-radius: 5px;
 	margin: 0 1em;
 	padding: 0.5em 0.75em;
+	margin: auto;
 }
+
+
+
+
+
+
+
+
+
 
 .home_avatar{
 	border-radius: 50%;
@@ -171,15 +277,7 @@ html, body {
 	color: #666;
 }
 
-
-/* Add padding to containers */
-.container {
-	padding: 16px;
-	background-color: white;
-	width: 70%;
-	margin: auto;
-  }
-  
+   
   /* Full-width input fields */
   input[type=text], input[type=password], textarea {
 	width: 100%;
@@ -195,29 +293,16 @@ html, body {
 	outline: none;
   }
   
-  /* Overwrite default styles of hr */
+  /* Overwrite default styles of hr*/
   hr {
 	border: 1px solid #f1f1f1;
 	margin-bottom: 25px;
   }
-  
-  /* Set a style for the submit button */
-  .registerbtn {
-	background-color: #4CAF50;
-	color: white;
-	padding: 16px 20px;
-	margin: 8px 0;
-	border: none;
-	cursor: pointer;
-	width: 100%;
-	opacity: 0.9;
-  }
-  
-  .registerbtn:hover {
-	opacity: 1;
-  }
-  
-  /* Add a blue text color to links */
+   
+
+ 
+   
+  /* Add a blue text color to links*/
   a {
 	color: rgb(255, 30, 79);
   }
@@ -233,47 +318,10 @@ html, body {
 }
   
 
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-  }
-  
-  li {
-	float: left;
-  }
-  
-  li a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-  }
-  
-  li a:hover:not(.active) {
-	background-color: #111;
-  }
-  
 
-  .card {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	max-width: 300px;
-	margin: auto;
-	text-align: center;
-  }
   
-  .title {
-	color: grey;
-	font-size: 18px;
-  }
-/*
+ 
 
-  	messagerie css
-
-*/
 
 
 .inbox_people {
@@ -281,72 +329,72 @@ ul {
 	float: left;
 	overflow: hidden;
 	width: 40%; border-right:1px solid #c4c4c4;
-  }
-  .inbox_msg {
+}
+.inbox_msg {
 	border: 1px solid #c4c4c4;
 	clear: both;
 	overflow: hidden;
-  }
-  .top_spac{ margin: 20px 0 0;}
-  
-  
-  .recent_heading {float: left; width:40%;}
-  .srch_bar {
+	}
+.top_spac{ margin: 20px 0 0;}
+
+
+.recent_heading {float: left; width:40%;}
+.srch_bar {
 	display: inline-block;
 	text-align: right;
 	width: 60%; 
-  }
-  .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-  
-  .recent_heading h4 {
+	}
+.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
+
+.recent_heading h4 {
 	color: #05728f;
 	font-size: 21px;
 	margin: auto;
-  }
-  .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; padding:2px 0 4px 6px; background:none;}
-  .srch_bar .input-group-addon button {
+}
+.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; padding:2px 0 4px 6px; background:none;}
+.srch_bar .input-group-addon button {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
 	padding: 0;
 	color: #707070;
 	font-size: 18px;
-  }
-  .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-  
-  .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-  .chat_ib h5 span{ font-size:13px; float:right;}
-  .chat_ib p{ font-size:14px; color:#989898; margin:auto}
-  .chat_img {
+}
+.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
+
+.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
+.chat_ib h5 span{ font-size:13px; float:right;}
+.chat_ib p{ font-size:14px; color:#989898; margin:auto}
+.chat_img {
 	float: left;
 	width: 11%;
-  }
-  .chat_ib {
+}
+.chat_ib {
 	float: left;
 	padding: 0 0 0 15px;
 	width: 88%;
-  }
-  
-  .chat_people{ overflow:hidden; clear:both;}
-  .chat_list {
+}
+
+.chat_people{ overflow:hidden; clear:both;}
+.chat_list {
 	border-bottom: 1px solid #c4c4c4;
 	margin: 0;
 	padding: 18px 16px 10px;
-  }
-  .inbox_chat { height: 550px; overflow-y: scroll;}
-  
-  .active_chat{ background:#ebebeb;}
-  
-  .incoming_msg_img {
+}
+.inbox_chat { height: 550px; overflow-y: scroll;}
+
+.active_chat{ background:#ebebeb;}
+
+.incoming_msg_img {
 	display: inline-block;
 	width: 6%;
-  }
-  .received_msg {
+}
+.received_msg {
 	display: inline-block;
 	padding: 0 0 0 10px;
 	vertical-align: top;
 	width: 92%;
-   }
-   .received_withd_msg p {
+}
+.received_withd_msg p {
 	background: #ebebeb none repeat scroll 0 0;
 	border-radius: 3px;
 	color: #646464;
@@ -354,44 +402,44 @@ ul {
 	margin: 0;
 	padding: 5px 10px 5px 12px;
 	width: 100%;
-  }
-  .time_date {
+}
+.time_date {
 	color: #747474;
 	display: block;
 	font-size: 12px;
 	margin: 8px 0 0;
-  }
-  .received_withd_msg { width: 57%;}
-  .mesgs {
+}
+.received_withd_msg { width: 57%;}
+.mesgs {
 	float: left;
 	padding: 30px 15px 0 25px;
 	width: 60%;
-  }
-  
-   .sent_msg p {
+}
+
+.sent_msg p {
 	background: #05728f none repeat scroll 0 0;
 	border-radius: 3px;
 	font-size: 14px;
 	margin: 0; color:#fff;
 	padding: 5px 10px 5px 12px;
 	width:100%;
-  }
-  .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
-  .sent_msg {
+}
+.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.sent_msg {
 	float: right;
 	width: 46%;
-  }
-  .input_msg_write input {
+}
+.input_msg_write input {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
 	color: #4c4c4c;
 	font-size: 15px;
 	min-height: 48px;
 	width: 100%;
-  }
-  
-  .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
-  .msg_send_btn {
+}
+
+.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.msg_send_btn {
 	background: #05728f none repeat scroll 0 0;
 	border: medium none;
 	border-radius: 50%;
@@ -403,10 +451,73 @@ ul {
 	right: 0;
 	top: 11px;
 	width: 33px;
-  }
-  .messaging { padding: 0 0 50px 0;}
-  .msg_history {
+}
+.messaging { padding: 0 0 50px 0;}
+.msg_history {
 	height: 516px;
 	overflow-y: auto;
-  }
+}
 
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul li {
+	border: 1px solid #ddd;
+	margin-top: -1px; /* Prevent double borders */
+	background-color: #f6f6f6;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 18px;
+	color: black;
+	display: block;
+	position: relative;
+}
+
+ul li:hover {
+	background-color: #eee;
+}
+
+.close {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 0%;
+	padding: 12px 16px;
+	transform: translate(0%, -50%);
+}
+
+
+
+
+ 
+@media screen and (max-width: 800px) {
+	.leftcolumn, .rightcolumn {   
+		width: 100%;
+		padding: 0;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.row{   
+		flex-direction: column;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.nav a {
+		float: none;
+		width: 100%;
+	}
+
+	.inbox_people{
+		width: 100%;
+	}
+	.mesgs{
+		width: 100%;
+		display: none;
+	}
+}

@@ -2,21 +2,20 @@ import React from 'react';
 import TweetPage from '../TweetPage';
 import { compose } from 'recompose';
 import { AuthUserContext } from '../Session';
-import { Grid } from '@material-ui/core';
 import { withAuthorization } from '../Session';
-import { UserCard } from '../User';
+import  UserCard  from './UserCard';
 const HomePage = () => (
 	<div>
 		<AuthUserContext.Consumer>
 			{authUser => (
-				<Grid container>
-					<Grid item xs={3}>
+				<div className="row">
+					<div className="leftcolumn">
 					 	<UserCard {...authUser}/>
-					</Grid>
-					<Grid item xs={9}>
+					</div>
+					<div className="rightcolumn">
 						<TweetPage authUser = {authUser} />
-					</Grid>					
-				</Grid>
+					</div>					
+				</div>
 			)}
 		</AuthUserContext.Consumer>
 			
