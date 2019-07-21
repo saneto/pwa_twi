@@ -5,7 +5,7 @@ class NotificationCard extends Component{
     render(){
         const {notification} = this.props;
         return(
-            <li>{notification.message}<span class="close">&times;</span></li>
+            <li>{notification.message}<span className="close">&times;</span></li>
         )
     }
 }

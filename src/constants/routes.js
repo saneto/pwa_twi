@@ -5,6 +5,6 @@ export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const LISTEAMIS = '/messagerie';
-export const USER = '/user/:id?';
+export const USERTWEET = '/usertweet/:id?';
 export const NOTIFICATION ='/notification';
 export const LISTOFUSER ='/listofuser';

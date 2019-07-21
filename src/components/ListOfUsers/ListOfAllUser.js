@@ -116,7 +116,7 @@ class ListOfAllUser extends Component{
     render(){
         const {users, text} = this.state;
         return(
-            <div className= "inbox_people">
+            <div className= "inbox_user_list">
                 <div className="headind_srch">
 					<div className="recent_heading">
 						<h4>Recent</h4>
@@ -134,13 +134,14 @@ class ListOfAllUser extends Component{
 						</div>
 					</div>
 				</div>
-                <div className="inbox_chat">
-                    {users.map(user=> (     
-                            <UserCard   key={user.uid} 
-                                        user={user}
-                                        onFollow={this.onFollow}
-                                        />
-                        )).reverse()
+                <div>
+                    {users.map(user=> (    
+                        <div key={user.uid}  >
+                            {user.uid!==this.state.authUser.uid? 
+                                <UserCard   
+                                            user={user}
+                                            onFollow={this.onFollow}/> : ''}
+                        </div>))
                     }
                 </div>
             </div>

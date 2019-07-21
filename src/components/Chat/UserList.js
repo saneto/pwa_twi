@@ -26,12 +26,14 @@ class UserList extends Component {
 					</div>
 					<div className="srch_bar">
 						<div className="stylish-input-group">
-							<input 	type="text" 
-									className="search-bar"  
-                            		name='text'
-                                    value={text}
-                                	onChange={this.onChangeText}
-                         			placeholder="Search" />
+							<label>
+								<input 	type="text" 
+										className="search-bar"  
+										name='text'
+										value={text}
+										onChange={this.onChangeText}
+										placeholder="Search" />
+							</label>
 							<span className="input-group-addon">
 								<button onClick={this.props.onSearch} type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
 							</span> 
@@ -40,10 +42,10 @@ class UserList extends Component {
 				</div>
 				<div className="inbox_chat">
 					{users.map(user => (
-						<div>	{user.uid!==this.state.user.uid? <UserCard key={user.uid} authUser={this.state.user} user = {user} onChangeChat={this.props.onChangeChat} currentUserId = {this.props.currentUserId}/> : ''}
-				
-							</div>
-						))}
+						<div key={user.uid}>	
+							{user.uid!==this.state.user.uid? <UserCard  authUser={this.state.user} user = {user} onChangeChat={this.props.onChangeChat} currentUserId = {this.props.currentUserId}/> : ''}
+						</div>
+					))}
 				</div>
 			</div>
 		);

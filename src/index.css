@@ -292,23 +292,15 @@ html, body {
 	background-color: #ddd;
 	outline: none;
   }
-  
-  /* Overwrite default styles of hr*/
-  hr {
+
+hr {
 	border: 1px solid #f1f1f1;
 	margin-bottom: 25px;
-  }
-   
-
- 
-   
-  /* Add a blue text color to links*/
-  a {
-	color: rgb(255, 30, 79);
-  }
+}
+  
 
 
-  .signoutbutton{
+.signoutbutton{
 	background-color: #2d84cc;
 	color: #fff;
 	border: 1px solid #1f6fb1;
@@ -474,7 +466,6 @@ ul li {
 	font-size: 18px;
 	color: black;
 	display: block;
-	position: relative;
 }
 
 ul li:hover {
@@ -490,6 +481,86 @@ ul li:hover {
 	transform: translate(0%, -50%);
 }
 
+
+.inbox_user_list{
+	background: #f8f8f8 none repeat scroll 0 0;
+    margin: auto;
+    overflow: hidden;
+    width: 90%;
+}
+
+.user_list_card {
+	border: 2px solid #ccc;
+	background-color: #eee;
+	border-radius: 5px;
+	padding: 16px;
+	margin: 16px 7px;
+}
+
+.user_list_card::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+.user_list_card img {
+	float: left;
+	margin-right: 20px;
+	border-radius: 50%;
+}
+
+.user_list_card span {
+	font-size: 20px;
+	margin-right: 15px;
+}
+
+
+.input-comment button {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	padding: 0;
+	color: #707070;
+	font-size: 18px;
+}
+.input-comment { margin: 0 0 0 -27px;}
+
+.new_comment {
+	width: 100%;
+	height: auto;
+	padding: 20px 0;
+	border-top: 1px solid lighten(#CCC, 10%);
+}
+.user_comment {
+list-style-type: none;
+}
+.comment_body {
+	display: inline-block;
+	vertical-align: middle;
+
+	width: calc(100% - 75px);
+min-height: 65px;
+	margin-left: 10px;
+	padding: 5px 10px;
+	font-size: .9rem;
+	color: #555;
+	background-color: #FFF;
+	border-bottom: 2px solid lighten(#CCC, 15%);
+}
+	
+.replied_to {
+	margin: 5px 0px;
+	background-color: lighten(#CCC, 18%);
+	border-bottom: 2px solid lighten(#CCC, 15%);
+	border-radius: 5px;
+}
+.replied_to	p {
+	padding: 5px;
+}
+.replied_to span {
+	color: #6495ED;
+	margin-right: 2px;
+}
+	
 
 
 
@@ -518,6 +589,19 @@ ul li:hover {
 	}
 	.mesgs{
 		width: 100%;
-		display: none;
+	}
+	.user_list_card {
+		text-align: center;
+	}
+	.user_list_card img {
+		margin: auto;
+		float: none;
+		display: block;
+	}
+}
+
+@media screen and (min-width: 1200px){
+	.container {
+		width: 70%;
 	}
 }

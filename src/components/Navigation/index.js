@@ -32,19 +32,16 @@ const NavigationAuth  = () => (
 			<Link to={ROUTES.LISTOFUSER}>Listes des utilisateurs</Link>
 		
 		
-			<Link className="right"><SignOutButton /></Link>
+			<Link className="right" to="#"><SignOutButton /></Link>
 	</div>
 );
 
 const NavigationNonAuth = () => (
-	<ul>
-		<li>
-			<Link to={ROUTES.SIGN_IN}>Sign In</Link>
-		</li>
-		<li>
-			<Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-		</li>
-	</ul>
+
+	<div className="navbar">
+		<Link className="right" to={ROUTES.SIGN_IN}>Sign In</Link>
+		<Link className="right" to={ROUTES.SIGN_UP}>Sign Up</Link>
+	</div>
 );
 	
 	

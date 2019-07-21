@@ -20,11 +20,13 @@ const MessageList = ({
         </div>
         <div className="type_msg">
             <div className="input_msg_write">
-                <input  type="text" 
-                        className="write_msg" 
-                        placeholder="Type a message"
-                        value={message}
-                        onChange={onChangeMessage} />
+                <label>
+                    <input  type="text" 
+                            className="write_msg" 
+                            placeholder="Type a message"
+                            value={message}
+                            onChange={onChangeMessage} />
+                </label>
                 <button onClick={onSendMessage}  className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true"></i></button>
             </div>
         </div>

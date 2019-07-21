@@ -1,3 +1,4 @@
 import TweetPage from './TweetPage';
+import TweetPageByUser from './TweetPageByUser';
 
-export default TweetPage ;
+export {TweetPage, TweetPageByUser} ;

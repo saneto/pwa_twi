@@ -67,22 +67,26 @@ class UserAccount extends Component
                     <img src={this.state.avatarURL} alt="Avatar" className="avatar_cardVersion" />
                 </div>
                 <div  className="container">
-                    <label htmlFor="username"><b>UserName</b></label>
+                    <label htmlFor="username"><b>UserName</b>
                     <input name="username"  value={this.state.username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
-                    
-                    <label htmlFor="name"><b>Name</b></label>
+                    </label>
+
+                    <label htmlFor="name"><b>Name</b>
                     <input name="name"  value={this.state.name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
-                    
-                    <label htmlFor="email"><b>Email Address</b></label>
+                    </label>
+
+                    <label htmlFor="email"><b>Email Address</b>
                     <input name="email" value={this.state.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
-                    
-                    <label htmlFor="bio"><b>bio</b></label>
+                    </label>
+
+                    <label htmlFor="bio"><b>bio</b>
                     <textarea 
                             name='bio'
                             value={this.state.bio}
                             onChange={this.onChange}
                     ></textarea>
-                   
+                   </label>
+
                     <label className="registerbtn" style={{backgroundColor: 'steelblue', color: 'white', width:'100%' , pointer: 'cursor'}}>
                         Select your awesome avatar
                         <FileUploader

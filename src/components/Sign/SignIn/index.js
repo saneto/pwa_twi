@@ -55,20 +55,22 @@ class SignInFormBase extends Component {
 
 		return (
 			<form onSubmit={this.onSubmit}>
+				<label htmlFor="email"><b>Email</b>
 				<input
 					name="email"
 					value={email}
 					onChange={this.onChange}
 					type="text"
 					placeholder="Email Address"
-				/>
+				/></label>
+				<label htmlFor="password"><b>Password</b>
 				<input
 					name="password"
 					value={password}
 					onChange={this.onChange}
 					type="password"
 					placeholder="Password"
-				/>
+				/></label>
 				<button className="registerbtn" disabled={isInvalid} type="submit">
 					Sign In
 				</button>

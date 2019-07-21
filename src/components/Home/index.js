@@ -1,5 +1,5 @@
 import React from 'react';
-import TweetPage from '../TweetPage';
+import {TweetPage} from '../TweetPage';
 import { compose } from 'recompose';
 import { AuthUserContext } from '../Session';
 import { withAuthorization } from '../Session';

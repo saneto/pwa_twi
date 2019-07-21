@@ -21,20 +21,17 @@ class UserCard extends Component
     render()
     {
         const {user, followState} = this.state;
+        
         return(
-            <div>
-                <div style={{backgroundColor: !followState? "lightblue" :"lightgreen"  }} className="chat_list">
-                    <div className="chat_people">
-                        <div className="chat_img"> <img className="avatar" src={user.src} alt="sunil"/> </div>
-                        <div className="chat_ib">
-                            <h5>{user.username} 
-                            <p>{user.bio}</p>
-                            </h5>
-                            <button className="signoutbutton" type="button" onClick={this.onFollow}>
-                                { followState? "Follow" :"Unfollow"  }
-                            </button>
-                        </div>
-                    </div>
+            <div className="user_list_card"  style={{backgroundColor: !followState? "lightblue" :"lightgreen"  }} >
+                <div className="chat_img"> <img className="avatar" src={user.src} alt="sunil"/> </div>
+                <div className="chat_ib">
+                    <h5>@{user.username}  <button className="signoutbutton" type="button" onClick={this.onFollow}>
+                        { followState? "Follow" :"Unfollow"  }
+                    </button>
+                    </h5>
+
+                    <p>{user.bio}</p>
                 </div>
             </div>
         );

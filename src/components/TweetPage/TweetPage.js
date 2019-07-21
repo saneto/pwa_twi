@@ -14,8 +14,8 @@ class TweetPage extends Component {
             tweets: [],
             limit: 15, 
             openText: false,
-            userNameToReply: '',
-            isReply : false,
+            replayText: '',
+            isRetweet:true,
             retweets: (this.props.authUser.listRetweet) ?  Object.values(this.props.authUser.listRetweet)  : [],
             likes: (this.props.authUser.listLike) ?  Object.values(this.props.authUser.listLike)  : [],
             follow: (this.props.authUser.following) ?  Object.values(this.props.authUser.following)  : [],
@@ -65,7 +65,7 @@ class TweetPage extends Component {
     
     onCloseText = (event) => {
         event.preventDefault()
-        this.setState({ openText: false })
+        this.setState({ openText: false, replayText:'' })
       }
 
     renderTweetInput = () => {
@@ -77,7 +77,7 @@ class TweetPage extends Component {
                         onCreateTweet={this.onCreateTweet}
                         text = {this.state.text}
                         onCloseText={this.onCloseText}
-                        userNameToReply = {this.state.userNameToReply}
+                        replayText = {this.state.replayText}
                     />
             )
         }
@@ -99,8 +99,13 @@ class TweetPage extends Component {
     }
 
   
-    onReTweet = (tweet, user) =>{    
-        this.state.tweets.push(tweet)
+    onReTweet = (replayText) =>{   
+        this.setState({ 
+            openText: true,
+            replayText,
+            isRetweet:true
+        }); 
+        /*this.state.tweets.push(tweet)
         if (this.state.retweets.filter(rt => rt === tweet.tid).length === 0 )
         {   
             this.props.firebase.tweet(tweet.tid).child('listreTweets').push({
@@ -116,7 +121,7 @@ class TweetPage extends Component {
             this.props.firebase.tweet(tweet.tid).child('retweets').set(tweet.retweets);
             this.props.firebase.user(user.uid).child('listRetweet').push(tweet.tid);
             this.state.retweets.push(tweet.tid);
-        }
+        }*/
        
     }
     
@@ -189,20 +194,33 @@ class TweetPage extends Component {
         this.props.firebase.tweet(tid).remove();
     };
 
-    onReplyTweet = (userNameToReply) =>{
+    onReplyTweet = (replayText) =>{
         this.setState({ 
             openText: true,
-            userNameToReply
+            replayText
         });
     }
 
     onChangeText = value => {
         this.setState({ text: value });
     };
+
     onOpenText  = event =>{
         event.preventDefault()
         this.setState({ openText: true})
     }
+
+    onComment = (tweet, user, commentText) =>{
+        this.props.firebase.tweet(tweet.tid).child('listCommentaire').push({
+            text: commentText,
+            userId: user.uid,
+            src: user.src,
+            username: user.username,
+            createdAt: this.props.firebase.serverValue.TIMESTAMP,
+        });
+    }
+
+
 
     render() {
         const { tweets, loading, authUser, follow,name } = this.state;
@@ -227,6 +245,7 @@ class TweetPage extends Component {
                             onReplyTweet={this.onReplyTweet}
                             onFollow = {this.onFollow}
                             follow = {follow}
+                            onComment={this.onComment}
                         />
                     )}
 

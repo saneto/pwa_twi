@@ -6,10 +6,8 @@ class TweetInput extends Component
     constructor(props)
     {
         super(props);
-        const pretext = (this.props.userNameToReply) ?  `@${this.props.userNameToReply} `  : '';
         this.state = {
-            text: pretext,
-            userNameToReply :'toto',
+            text: (this.props.replayText) ?  `${this.props.replayText} `  : '',
         }
     };
 
@@ -26,7 +24,7 @@ class TweetInput extends Component
     
     render()
     {
-        const { text, userNameToReply  } = this.state;
+        const { text  } = this.state;
         return(
             <form onSubmit={this.onsubmit}>
                 <textarea className="tweet_text" 
@@ -34,7 +32,6 @@ class TweetInput extends Component
                         value={text}
                         onChange={this.onChangeText}
                 >
-                    {(userNameToReply) ? `@${userNameToReply} ` : ''}
                 </textarea>
                 <div className="tweet_button">
                     <button className="tweet_close" 

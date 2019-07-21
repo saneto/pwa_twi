@@ -8,8 +8,8 @@ const TweetList = ({
 	onReTweet ,
 	onaddFavorite,
 	onReplyTweet,
-	onEditTweet,
 	onRemoveTweet,
+	onComment,
 	onFollow,
 	follow,
 	name,
@@ -23,10 +23,10 @@ const TweetList = ({
 						onReTweet ={onReTweet}
 						onaddFavorite={onaddFavorite}
 						onReplyTweet={onReplyTweet}
-						onEditTweet={onEditTweet}
 						onRemoveTweet={onRemoveTweet}
 						onFollow = {onFollow}
 						follow = {follow}
+						onComment= {onComment}
 			/>
 		)).reverse()}
 	</div>

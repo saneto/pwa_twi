@@ -123,14 +123,20 @@ class ChatPage extends Component{
                     }
                 }
             )
-            usersList.splice(this.context,1)
-            this.setState({
-                users: usersList,
-                currentUser:usersList[0],
-                currentUserId: usersList[0].uid
-            });
+            if(usersList.length > 0){
+                this.setState({
+                    users: usersList,
+                    currentUser:usersList[0],
+                    currentUserId: usersList[0].uid
+                });
+            }else{
+                this.setState({
+                    users: usersList
+                });
+            }
+           
         } else {
-            this.setState({ users: null, currentUser:{} });
+            this.setState({ users: [], currentUser:{} });
         }
     }
     onChangeText = value =>{

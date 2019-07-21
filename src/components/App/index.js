@@ -13,6 +13,7 @@ import LandingPage from '../Landing';
 import NotificationPage from '../Notification';
 import ListOfUserPage from '../ListOfUsers';
 import Navigation from '../Navigation';
+import {TweetPageByUser} from '../TweetPage';
 
 
 import * as ROUTES from '../../constants/routes';
@@ -35,6 +36,7 @@ const App = () => (
 				<Route path={ROUTES.ACCOUNT} component={AccountPage} />
 				<Route path={ROUTES.NOTIFICATION} component={NotificationPage} />
 				<Route path={ROUTES.LISTOFUSER} component={ListOfUserPage} />
+				<Route path={ROUTES.USERTWEET} component={TweetPageByUser} />
 			</div>
 		</div>
 	</Router>

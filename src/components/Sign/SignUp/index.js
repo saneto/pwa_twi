@@ -99,21 +99,26 @@ class SignUpFormBase extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div >
-                    <label htmlFor="username"><b>User Name</b></label>
+                    <label htmlFor="username"><b>User Name</b>
                     <input name="username"  value={username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
+                    </label>
 
-                    <label htmlFor="name"><b>Name</b></label>
+                    <label htmlFor="name"><b>Name</b>
                     <input name="name"  value={name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
-                    
-                    <label htmlFor="email"><b>Email Address</b></label>
+                    </label>
+
+                    <label htmlFor="email"><b>Email Address</b>
                     <input name="email" value={email} onChange={this.onChange} type="text" placeholder="Email Address"  />
-                    
-                    <label htmlFor="passwordOne"><b>Password</b></label>
+                    </label>
+
+                    <label htmlFor="passwordOne"><b>Password</b>
                     <input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password"  />
-                    
-                    <label htmlFor="passwordTwo"><b>Confirm Password</b></label>
+                    </label>
+
+                    <label htmlFor="passwordTwo"><b>Confirm Password</b>
                     <input name="passwordTwo"  value={passwordTwo} onChange={this.onChange}  type="password" placeholder="Confirm Password"  />
-                    
+                    </label>
+
                     <button  className="registerbtn" disabled={isInvalid} type="submit">
                         Sign Up
                     </button>
