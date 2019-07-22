@@ -8,6 +8,7 @@ import { compose } from 'recompose';
 class TweetPage extends Component {
     constructor(props) {
         super(props)
+        console.log(this.props.authUser.following)
         this.state = { 
             text: '',
             loading: false,

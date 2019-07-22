@@ -118,7 +118,7 @@ class ChatPage extends Component{
             const arrayFolow=(this.context.following) ?  Object.values(this.context.following)  : [];
             usersList.forEach(value =>{
                     value.isFollow = false;
-                    if (arrayFolow.filter(rt => rt === value.uid).length === 0 )
+                    if (arrayFolow.filter(rt => rt === value.uid).length !== 0 )
                     {   
                         value.isFollow = true;
                     }

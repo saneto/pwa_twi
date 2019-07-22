@@ -31,7 +31,7 @@ class TweetPageByUser extends Component{
                     if (tweetsObject) {
                         let tweetsList = [];
                         Object.keys(tweetsObject).forEach(key => {
-                            if(Object.values(this.state.authUser.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
+                            if(Object.values(this.state.authUser.following).filter(rt => rt === tweetsObject[key].userId).length !== 0 ){
                                 tweetsList.push({
                                     ...tweetsObject[key],
                                     tid: key,
