@@ -11,7 +11,7 @@ class TweetPage extends Component {
         this.state = { 
             text: '',
             loading: false,
-            tweets: [],
+            tweets: this.props.tweets,
             limit: 15, 
             openText: false,
             replayText: '',
@@ -22,51 +22,7 @@ class TweetPage extends Component {
             authUser :  this.props.authUser,
         }   
     };
-  
-    componentDidMount() {
-        this.onListenForTweets();
-        this.onListenForUserDataUpdate();
-    };
 
-    onListenForTweets = () => {
-        this.setState({ loading: true });
-
-        this.props.firebase.tweets()
-            .orderByChild('createdAt')
-            .limitToLast(this.state.limit)
-            .on('value', snapshot => {
-                    const tweetsObject = snapshot.val();
-                    if (tweetsObject) {
-                        const tweetsList = Object.keys(tweetsObject).map(key => ({
-                            ...tweetsObject[key],
-                            tid: key,
-                        }));
-                    
-                        this.setState({
-                            tweets: tweetsList,
-                            loading: false,
-                        });
-                    } else {
-                        this.setState({ tweets: null, loading: false });
-                    }
-
-            });     
-            
-            
-        
-    };
-
-
-    onListenForUserDataUpdate=()=>{
-        this.props.firebase.user(this.state.authUser.uid).on('value', snapshot=>
-        {
-            this.setState({
-                authUser:snapshot.val(),
-            });
-        });
-           
-    }
-    
     onCloseText = (event) => {
         event.preventDefault()
         this.setState({ openText: false, replayText:'' })
@@ -207,12 +163,12 @@ class TweetPage extends Component {
     }
 
 
-
     render() {
-        const { tweets, loading, authUser, follow,name } = this.state;
+        const {  authUser, follow,name } = this.state;
+        const { tweets} = this.props;
         return (
                 <div>
-                    {loading && <div>Loading ...</div>}  
+                    
                     <div className="root_Tweet_item">
                         <button onClick={this.onOpenText} className="open_button_tweet">
                             <span className='fa fa-lg fa-edit'></span> Tweet!

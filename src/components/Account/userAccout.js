@@ -29,6 +29,11 @@ class UserAccount extends Component
     handleUploadError = error => {
         this.setState({ isUploading: false });
     };
+    componentWillUnmount() {
+        this.props.firebase.users().off();
+    };
+
+
     handleUploadSuccess = filename => {
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         this.props.firebase
@@ -69,7 +74,6 @@ class UserAccount extends Component
     }
 
     changePassword = () =>{
-        console.log("ee")
         this.setState({
             changePassword : !this.state.changePassword
         })

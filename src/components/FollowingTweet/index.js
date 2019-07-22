@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
+import { AuthUserContext } from '../Session';
 import { compose } from 'recompose';
+import {TweetPage} from '../TweetPage';
+import {UserCard} from '../Home';
 
 
-class TweetPageByUser extends Component{
+class TweetPageByFollowing extends Component{
     constructor(props){
         super(props)
         this.state = {
-            authUser : this.props.authUser,
+            authUser : null,
             limit: 15, 
+            tweets : [],
+            loading : true
 
         }
+        this.state.authUser = this.context;
     }
 
     componentDidMount() {
@@ -31,7 +36,7 @@ class TweetPageByUser extends Component{
                     if (tweetsObject) {
                         let tweetsList = [];
                         Object.keys(tweetsObject).forEach(key => {
-                            if(Object.values(this.state.authUser.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
+                            if(Object.values(this.context.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
                                 tweetsList.push({
                                     ...tweetsObject[key],
                                     tid: key,
@@ -54,7 +59,7 @@ class TweetPageByUser extends Component{
             });    
     };
     onListenForUserDataUpdate=()=>{
-        this.props.firebase.user(this.state.authUser.uid).on('value', snapshot=>
+        this.props.firebase.user(this.context.uid).on('value', snapshot=>
         {
             this.setState({
                 authUser:snapshot.val(),
@@ -69,16 +74,25 @@ class TweetPageByUser extends Component{
     };
 
     render(){
+        const { tweets, loading} = this.state;
+        const authUser =  this.context;
         return(
-            <div></div>
+            <div className="row">
+                    <div className="leftcolumn">
+                        <UserCard  {...authUser}/>
+                    </div>
+                    {loading && <div>Loading ...</div>}  
+                    <div className="rightcolumn">
+                        <TweetPage authUser = {authUser}
+                                tweets = {tweets} />
+                    </div>
+            </div>
         )
     }
 }
 
-const condition = authUser => !!authUser;
-
+TweetPageByFollowing.contextType = AuthUserContext;
 export default compose(
     withFirebase,
     withRouter,
-	withAuthorization(condition),
-)(TweetPageByUser);
+)(TweetPageByFollowing);

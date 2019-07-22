@@ -38,7 +38,10 @@ class Firebase {
 	doSignInWithEmailAndPassword = (email, password) =>
 		this.auth.signInWithEmailAndPassword(email, password);
 
-	doSignOut = () => this.auth.signOut();
+	doSignOut = () =>{
+		this.users().off();
+		this.auth.signOut();
+	} 
 
 	doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
@@ -49,8 +52,7 @@ class Firebase {
 		this.auth.onAuthStateChanged(authUser => {
 			if (authUser) {
 				this.user(authUser.uid)
-					.once('value')
-					.then(snapshot => {
+					.on('value', snapshot => {
 						const dbUser = snapshot.val();
 						authUser = {
 							uid: authUser.uid,

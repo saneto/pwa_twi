@@ -1,22 +1,22 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "description": "Get all the information you doesn't know you wanted !",
-  "icons": [
-    {
-			"src": "icon-192x192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
+    "short_name": "Twittos",
+    "name": "Twitter",
+    "description": "Voici mon projet twitter crée pour les besoins de pwa !",
+    "icons": [
+      {
+        "src": "icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
 
-		{
-			"src": "icon-512x512.png",
-			"sizes": "512x512",
-			"type": "image/png"
-		}
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+      {
+        "src": "icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
 }

@@ -27,6 +27,7 @@ class ChatPage extends Component{
 
 	componentWillUnmount() {
 		this.props.firebase.users().off();
+		this.props.firebase.chats().off();
 	}
 
 	onListenForUsers = () => {

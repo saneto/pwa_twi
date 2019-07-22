@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import TweetCommentCard from './TweetCommentCard';
 
+import {Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 class TweetItem extends Component {
 	constructor(props) {
 		super(props);
@@ -53,14 +55,18 @@ class TweetItem extends Component {
 		const {  tweet, onRemoveTweet} = this.props;
 		const dateFormat = moment(tweet.createdAt).fromNow();
 		const commentList = tweet.listCommentaire ? Object.values(tweet.listCommentaire):null;
+		const userRoute = ROUTES.PATHUSERTWEET+"/"+tweet.username;
+        
 		return (
 			<div key={tweet.uid} className="root_Tweet_item">
 				<div className="user">
-					<span className="imgcontainer space"> 
-						<img src={tweet.src} alt="Avatar" className="avatar" />  
-					</span>  
-					<span className="username space">   {tweet.username}      {this.state.name}</span>
-          			<span className="date space">   {dateFormat}</span>
+					<Link to={userRoute}>
+						<span className="imgcontainer space"> 
+							<img src={tweet.src} alt="Avatar" className="avatar" />  
+						</span>  
+						<span className="username space">   {tweet.username}      {this.state.name}</span>
+					</Link>
+					<span className="date space">   {dateFormat}</span>
 					{tweet.editedAt && <span>(Edited)</span>}
 					<button className="signoutbutton" type="button" onClick={this.onFollow}>
 						{this.state.followTexte}

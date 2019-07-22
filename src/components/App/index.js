@@ -13,8 +13,8 @@ import LandingPage from '../Landing';
 import NotificationPage from '../Notification';
 import ListOfUserPage from '../ListOfUsers';
 import Navigation from '../Navigation';
-import {TweetPageByUser} from '../TweetPage';
-
+import TweetPageByUser from '../UsersTweetView';
+import TweetPageByFollowing from '../FollowingTweet'
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -37,6 +37,8 @@ const App = () => (
 				<Route path={ROUTES.NOTIFICATION} component={NotificationPage} />
 				<Route path={ROUTES.LISTOFUSER} component={ListOfUserPage} />
 				<Route path={ROUTES.USERTWEET} component={TweetPageByUser} />
+				<Route path={ROUTES.FOLLOWINGTWEET} component={TweetPageByFollowing} />
+				
 			</div>
 		</div>
 	</Router>

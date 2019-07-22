@@ -13,8 +13,6 @@ class NotificationPage extends Component {
             limit : 20,
             loading: true,
         }   
-        
-		this.props.firebase.notifications().off();
     };
   
     componentDidMount() {

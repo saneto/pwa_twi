@@ -1,4 +1,4 @@
 import TweetPage from './TweetPage';
-import TweetPageByUser from './TweetPageByUser';
+import TweetPageALL from './TweetPageAll';
 
-export {TweetPage, TweetPageByUser} ;
+export {TweetPage, TweetPageALL} ;

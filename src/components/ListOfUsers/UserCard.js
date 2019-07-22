@@ -1,5 +1,7 @@
 import React,{Component} from "react";
 
+import {Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 class UserCard extends Component
 {
     constructor(props)
@@ -21,14 +23,27 @@ class UserCard extends Component
     render()
     {
         const {user, followState} = this.state;
-        
+        const userRoute = ROUTES.PATHUSERTWEET+"/"+user.username;
         return(
             <div className="user_list_card"  style={{backgroundColor: !followState? "lightblue" :"lightgreen"  }} >
-                <div className="chat_img"> <img className="avatar" src={user.src} alt="sunil"/> </div>
+                <div className="chat_img"> 
+                    <Link to={userRoute}>
+                        <img className="avatar" src={user.src} alt="sunil"/> 
+                    </Link>
+                </div>
                 <div className="chat_ib">
-                    <h5>@{user.username}  <button className="signoutbutton" type="button" onClick={this.onFollow}>
-                        { followState? "Follow" :"Unfollow"  }
-                    </button>
+                    <h5>
+                        <Link to={userRoute}>
+                            @{user.username} 
+                        </Link>
+                    
+                        <button className="signoutbutton" type="button" onClick={this.onFollow}>
+                            { followState? "Follow" :"Unfollow"  }
+                        </button>
+
+                        <p>
+                            {user.bio}
+                        </p>
                     </h5>
 
                     <p>{user.bio}</p>

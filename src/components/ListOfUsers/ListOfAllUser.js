@@ -25,6 +25,7 @@ class ListOfAllUser extends Component{
     
     componentWillUnmount() {
         this.props.firebase.users().off();
+        this.props.firebase.notifications().off();
     };
 
     onListenForUsers = () => {
@@ -43,7 +44,7 @@ class ListOfAllUser extends Component{
             this.props.firebase.user(followingUser.uid).child('followers').push(user.uid);
             this.props.firebase.user(user.uid).child('following').push(followingUser.uid);
             this.props.firebase.notification(followingUser.notifId).push({
-                uid : user.uid,
+                username : user.username,
                 message : "l'utilisateur "+ user.username+" vous a follow",
                 vue : false,
             })

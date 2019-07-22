@@ -22,6 +22,8 @@ const NavigationAuth  = () => (
 	<div className="navbar">
 		
 			<Link to={ROUTES.HOME}>Home</Link>
+
+			<Link to={ROUTES.FOLLOWINGTWEET}>Abonnement</Link>
 	
 			<Link to={ROUTES.ACCOUNT}>Account</Link>
 		

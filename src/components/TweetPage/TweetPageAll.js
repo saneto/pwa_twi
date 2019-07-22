@@ -1,31 +1,30 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import { withFirebase } from '../Firebase';
-//import TweetList from './TweetList';
-//import TweetInput from "./TweetInput";
-import { withAuthorization } from '../Session';
+import TweetPage from './TweetPage'
 import { compose } from 'recompose';
 
 
-class TweetPageByUser extends Component{
+class TweetPageALL extends Component{
     constructor(props){
         super(props)
         this.state = {
             authUser : this.props.authUser,
-            limit : 5,
+            limit : 20,
             id : this.props.match.params.id
         }
     }
 
     componentDidMount() {
         this.onListenForTweets();
+        this.onListenForUserDataUpdate();
     };
 
     onListenForTweets = () => {
         this.setState({ loading: true });
+
         this.props.firebase.tweets()
-            .orderByChild('username')
-            .equalTo(this.state.id)
+            .orderByChild('createdAt')
             .limitToLast(this.state.limit)
             .on('value', snapshot => {
                     const tweetsObject = snapshot.val();
@@ -34,7 +33,7 @@ class TweetPageByUser extends Component{
                             ...tweetsObject[key],
                             tid: key,
                         }));
-                        console.log(tweetsList)
+                        console.log("toto")
                         this.setState({
                             tweets: tweetsList,
                             loading: false,
@@ -42,24 +41,37 @@ class TweetPageByUser extends Component{
                     } else {
                         this.setState({ tweets: null, loading: false });
                     }
-            });    
+
+            });     
     };
+
+    onListenForUserDataUpdate=()=>{
+        this.props.firebase.user(this.state.authUser.uid).on('value', snapshot=>
+        {
+            this.setState({
+                authUser:snapshot.val(),
+            });
+        });
+           
+    }
 
     componentWillUnmount() {
         this.props.firebase.tweets().off();
+        this.props.firebase.users().off();
     };
 
     render(){
         return(
-            <div></div>
+            <div className="rightcolumn">
+                <TweetPage  authUser = {this.state.authUser}
+                            tweets = {this.state.tweets} />
+            </div>	
         )
     }
 }
 
-const condition = authUser => !!authUser;
 
 export default compose(
     withFirebase,
-	withAuthorization(condition),
     withRouter,
-)(TweetPageByUser);
+)(TweetPageALL);
