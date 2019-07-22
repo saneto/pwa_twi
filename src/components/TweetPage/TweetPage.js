@@ -50,8 +50,12 @@ class TweetPage extends Component {
                         this.setState({ tweets: null, loading: false });
                     }
 
-            });        
+            });     
+            
+            
+        
     };
+
 
     onListenForUserDataUpdate=()=>{
         this.props.firebase.user(this.state.authUser.uid).on('value', snapshot=>
@@ -104,25 +108,7 @@ class TweetPage extends Component {
             openText: true,
             replayText,
             isRetweet:true
-        }); 
-        /*this.state.tweets.push(tweet)
-        if (this.state.retweets.filter(rt => rt === tweet.tid).length === 0 )
-        {   
-            this.props.firebase.tweet(tweet.tid).child('listreTweets').push({
-                text: this.state.text,
-                userId: user.uid,
-                src: user.src,
-                username: user.username,
-                createdAt: this.props.firebase.serverValue.TIMESTAMP,
-                like: 0,
-                retweets: 0,
-            });
-            tweet.retweets++;
-            this.props.firebase.tweet(tweet.tid).child('retweets').set(tweet.retweets);
-            this.props.firebase.user(user.uid).child('listRetweet').push(tweet.tid);
-            this.state.retweets.push(tweet.tid);
-        }*/
-       
+        });        
     }
     
     onFollow= (followingId, user) =>{

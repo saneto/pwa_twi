@@ -17,16 +17,14 @@ class TweetCommentCard extends Component{
         return(
             <li>
                 <div className="comment_body">
-                    <p>
-                        <div className="replied_to">
-                            <p>
-                                <span className="user">
-                                    <Link to={userRoute}>@{comment.username}</Link>
-                                </span>
-                                {comment.text}
-                            </p>
-                        </div>
-                    </p>
+                    <div className="replied_to">
+                        <p>
+                            <span className="user">
+                                <Link to={userRoute}>@{comment.username}</Link>
+                            </span>
+                            {comment.text}
+                        </p>
+                    </div>
                 </div>
             </li>
         )

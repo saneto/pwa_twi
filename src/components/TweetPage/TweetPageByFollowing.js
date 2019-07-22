@@ -12,9 +12,10 @@ class TweetPageByUser extends Component{
         super(props)
         this.state = {
             authUser : this.props.authUser,
-            limit : 5,
-            id : this.props.match.params.id
+            limit: 15, 
+
         }
+        console.log(this.props)
     }
 
     componentDidMount() {
@@ -23,18 +24,28 @@ class TweetPageByUser extends Component{
 
     onListenForTweets = () => {
         this.setState({ loading: true });
+
         this.props.firebase.tweets()
-            .orderByChild('username')
-            .equalTo(this.state.id)
+            .orderByChild('createdAt')
             .limitToLast(this.state.limit)
             .on('value', snapshot => {
                     const tweetsObject = snapshot.val();
                     if (tweetsObject) {
-                        const tweetsList = Object.keys(tweetsObject).map(key => ({
-                            ...tweetsObject[key],
-                            tid: key,
-                        }));
-                        console.log(tweetsList)
+                        let tweetsList = [];
+                        Object.keys(tweetsObject).forEach(key => {
+                            if(Object.values(this.state.authUser.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
+                                tweetsList.push({
+                                    ...tweetsObject[key],
+                                    tid: key,
+                                })
+                            }  
+                        });
+                        
+                        if(tweetsList.length<this.state.limit){
+                            this.setState({
+                                limit: this.state.limit+5
+                            });
+                        }
                         this.setState({
                             tweets: tweetsList,
                             loading: false,
@@ -60,6 +71,6 @@ const condition = authUser => !!authUser;
 
 export default compose(
     withFirebase,
-	withAuthorization(condition),
     withRouter,
+	withAuthorization(condition),
 )(TweetPageByUser);

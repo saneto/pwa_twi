@@ -56,11 +56,12 @@ class PasswordChangeForm extends Component {
 				type="password"
 				placeholder="Confirm New Password"
 			/>
-			<button disabled={isInvalid} type="submit">
+			<button className="open_button_tweet" disabled={isInvalid} type="submit">
 				Reset My Password
 			</button>
 
 			{error && <p>{error.message}</p>}
+			
 		</form>
 		);
 	}

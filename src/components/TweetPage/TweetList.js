@@ -7,7 +7,6 @@ const TweetList = ({
 	tweets,
 	onReTweet ,
 	onaddFavorite,
-	onReplyTweet,
 	onRemoveTweet,
 	onComment,
 	onFollow,
@@ -22,7 +21,6 @@ const TweetList = ({
 						name = {name}
 						onReTweet ={onReTweet}
 						onaddFavorite={onaddFavorite}
-						onReplyTweet={onReplyTweet}
 						onRemoveTweet={onRemoveTweet}
 						onFollow = {onFollow}
 						follow = {follow}

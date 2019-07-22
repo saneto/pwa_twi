@@ -17,15 +17,9 @@ class TweetItem extends Component {
 	}
 
 	onPressRetweet =() => {
-		//this.props.onReTweet(this.props.tweet, this.props.authUser);
 		this.props.onReTweet('\n\n@'+this.props.tweet.username+' '+this.props.tweet.text);
 	}
 
-	onReplyTweet =() => {
-		this.props.onReplyTweet('\n\n@'+this.props.tweet.username+' '+this.props.tweet.text);
-	}
-
-	 
 	onPressFavorite =() => {
 		this.props.onaddFavorite(this.props.tweet, this.props.authUser);
 		this.setState({
@@ -74,12 +68,9 @@ class TweetItem extends Component {
 				</div>
 				<h3>{tweet.text}</h3>
 				<div className="buttons">
-					<div className="icon_reply" onClick={this.onReplyTweet} >
-						<span className='fa fa-reply'>  Reply</span>
-					</div>
 					<div className="rtGreen space" onClick={this.onPressRetweet} >
 						<span className='fa fa-retweet'></span>
-						<span className="number">{tweet.retweets}   Retweet</span>
+						<span className="number"> Retweet</span>
 					</div>
 					<div className="favYellow space" onClick={this.onPressFavorite} >
 						<span className='fa fa-star'></span>

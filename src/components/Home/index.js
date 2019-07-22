@@ -1,5 +1,5 @@
 import React from 'react';
-import {TweetPage} from '../TweetPage';
+import {TweetPage,TweetPageByUser} from '../TweetPage';
 import { compose } from 'recompose';
 import { AuthUserContext } from '../Session';
 import { withAuthorization } from '../Session';
@@ -14,7 +14,10 @@ const HomePage = () => (
 					</div>
 					<div className="rightcolumn">
 						<TweetPage authUser = {authUser} />
-					</div>					
+					</div>	
+					<div className="rightcolumn">
+						<TweetPageByUser authUser = {authUser} />
+					</div>						
 				</div>
 			)}
 		</AuthUserContext.Consumer>

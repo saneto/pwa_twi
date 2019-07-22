@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import FileUploader from "react-firebase-file-uploader";
 
 import { withFirebase } from '../Firebase';
+import PasswordChangeForm from '../Password/PasswordChange';
+
 
 class UserAccount extends Component
 {
@@ -18,6 +20,7 @@ class UserAccount extends Component
           username : props.authUser.username, 
           email : props.authUser.email, 
           bio : props.authUser.bio, 
+          changePassword: false,
         };
       }
     handleChangeUsername = event => this.setState({ username: event.target.value });
@@ -57,53 +60,78 @@ class UserAccount extends Component
         });
         event.preventDefault();
     };
- 
+
+    changePasswordFrom= ()=>{
+        if(this.state.changePassword)
+        {
+            return(<PasswordChangeForm/>)
+        }
+    }
+
+    changePassword = () =>{
+        console.log("ee")
+        this.setState({
+            changePassword : !this.state.changePassword
+        })
+    }
+    
     render()
     {
         const {user} = this.state;
         return (
-            <form onSubmit={this.onSubmit}>
-                <div className="imgcontainer">
-                    <img src={this.state.avatarURL} alt="Avatar" className="avatar_cardVersion" />
-                </div>
-                <div  className="container">
-                    <label htmlFor="username"><b>UserName</b>
-                    <input name="username"  value={this.state.username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
+            <div>    
+                <form onSubmit={this.onSubmit}>
+                    <div className="imgcontainer">
+                        <img src={this.state.avatarURL} alt="Avatar" className="avatar_cardVersion" />
+                    </div>
+                    <div  className="container">
+                        <label htmlFor="username"><b>Nickname</b>
+                        <input name="username"  value={this.state.username}  onChange={this.onChange} type="text"  placeholder="Full Name"   />
+                        </label>
+
+                        <label htmlFor="name"><b>Name</b>
+                        <input name="name"  value={this.state.name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
+                        </label>
+
+                        <label htmlFor="email"><b>Email Address</b>
+                        <input name="email" value={this.state.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
+                        </label>
+
+                        <label htmlFor="bio"><b>bio</b>
+                        <textarea 
+                                name='bio'
+                                value={this.state.bio}
+                                onChange={this.onChange}
+                        ></textarea>
                     </label>
 
-                    <label htmlFor="name"><b>Name</b>
-                    <input name="name"  value={this.state.name}  onChange={this.onChange} type="text"  placeholder=" Name"   />
-                    </label>
+                        <label className="open_button_tweet" style={{backgroundColor: 'steelblue', color: 'white', width:'100%' , pointer: 'cursor'}}>
+                            Select your awesome avatar
+                            <FileUploader
+                            hidden
+                            accept="image/*"
+                            storageRef={this.props.firebase.image(user.uid)}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            onProgress={this.handleProgress}
+                            />
+                        </label>
+                        <br/>
+                        <br/>
 
-                    <label htmlFor="email"><b>Email Address</b>
-                    <input name="email" value={this.state.email} onChange={this.onChange} type="text" placeholder="Email Address"  />
-                    </label>
-
-                    <label htmlFor="bio"><b>bio</b>
-                    <textarea 
-                            name='bio'
-                            value={this.state.bio}
-                            onChange={this.onChange}
-                    ></textarea>
-                   </label>
-
-                    <label className="registerbtn" style={{backgroundColor: 'steelblue', color: 'white', width:'100%' , pointer: 'cursor'}}>
-                        Select your awesome avatar
-                        <FileUploader
-                        hidden
-                        accept="image/*"
-                        storageRef={this.props.firebase.image(user.uid)}
-                        onUploadStart={this.handleUploadStart}
-                        onUploadError={this.handleUploadError}
-                        onUploadSuccess={this.handleUploadSuccess}
-                        onProgress={this.handleProgress}
-                        />
-                    </label>
-                    <button  className="registerbtn"  type="submit">
-                        Valider
+                        <button  className="registerbtn"  type="submit">
+                            Valider
+                        </button>
+                    </div>
+                </form>
+			    <div  className="container">
+                    <button onClick={this.changePassword} className="open_button_tweet">
+                        Change password
                     </button>
+                    {this.changePasswordFrom()}
                 </div>
-            </form>
+            </div>
         );
     }
 }

@@ -20,10 +20,15 @@ class Firebase {
 		app.initializeApp(config);
 
 		this.serverValue = app.database.ServerValue;
+		//this.emailAuthProvider = app.auth.EmailAuthProvider;
 
 		this.auth = app.auth();
 		this.db = app.database();
 		this.storage = app.storage();
+
+
+		/*this.googleProvider = new app.auth.GoogleAuthProvider();*/
+
 	}
 
 
@@ -59,6 +64,19 @@ class Firebase {
 				fallback();
 			}
 		});
+
+
+
+
+	doSendEmailVerification = () =>
+		this.auth.currentUser.sendEmailVerification({
+		  url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
+		});
+
+	
+	doSignInWithGoogle = () =>
+		this.auth.signInWithPopup(this.googleProvider);
+	
 
 	user = uid => this.db.ref(`users/${uid}`);
 
