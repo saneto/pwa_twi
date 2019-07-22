@@ -14,7 +14,8 @@ class TweetPageByFollowing extends Component{
             authUser : null,
             limit: 15, 
             tweets : [],
-            loading : true
+            loading : true,
+            aucunF : false
 
         }
         this.state.authUser = this.context;
@@ -27,36 +28,41 @@ class TweetPageByFollowing extends Component{
 
     onListenForTweets = () => {
         this.setState({ loading: true });
+        if(this.context.following !== undefined && this.context.following.length!==0)
+        {
 
-        this.props.firebase.tweets()
-            .orderByChild('createdAt')
-            .limitToLast(this.state.limit)
-            .on('value', snapshot => {
-                    const tweetsObject = snapshot.val();
-                    if (tweetsObject) {
-                        let tweetsList = [];
-                        Object.keys(tweetsObject).forEach(key => {
-                            if(Object.values(this.context.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
-                                tweetsList.push({
-                                    ...tweetsObject[key],
-                                    tid: key,
-                                })
-                            }  
-                        });
-
-                        if(tweetsList.length<this.state.limit){
-                            this.setState({
-                                limit: this.state.limit+5
+            this.props.firebase.tweets()
+                .orderByChild('createdAt')
+                .limitToLast(this.state.limit)
+                .on('value', snapshot => {
+                        const tweetsObject = snapshot.val();
+                        if (tweetsObject) {
+                            let tweetsList = [];
+                            Object.keys(tweetsObject).forEach(key => {
+                                if(Object.values(this.context.following).filter(rt => rt === tweetsObject[key].userId).length === 0 ){
+                                    tweetsList.push({
+                                        ...tweetsObject[key],
+                                        tid: key,
+                                    })
+                                }  
                             });
+
+                            if(tweetsList.length<this.state.limit){
+                                this.setState({
+                                    limit: this.state.limit+5
+                                });
+                            }
+                            this.setState({
+                                tweets: tweetsList,
+                                loading: false,
+                            });
+                        } else {
+                            this.setState({ tweets: null, loading: false });
                         }
-                        this.setState({
-                            tweets: tweetsList,
-                            loading: false,
-                        });
-                    } else {
-                        this.setState({ tweets: null, loading: false });
-                    }
-            });    
+                });    
+        }else{
+            this.setState({ aucunF: true, tweets: null, loading: false });
+        }
     };
     onListenForUserDataUpdate=()=>{
         this.props.firebase.user(this.context.uid).on('value', snapshot=>
@@ -74,7 +80,7 @@ class TweetPageByFollowing extends Component{
     };
 
     render(){
-        const { tweets, loading} = this.state;
+        const {aucunF, tweets, loading} = this.state;
         const authUser =  this.context;
         return(
             <div className="row">
@@ -82,6 +88,7 @@ class TweetPageByFollowing extends Component{
                         <UserCard  {...authUser}/>
                     </div>
                     {loading && <div>Loading ...</div>}  
+                    {aucunF && <div>Vous ne suivez personnes</div>} 
                     <div className="rightcolumn">
                         <TweetPage authUser = {authUser}
                                 tweets = {tweets} />

@@ -33,7 +33,6 @@ class TweetPageALL extends Component{
                             ...tweetsObject[key],
                             tid: key,
                         }));
-                        console.log("toto")
                         this.setState({
                             tweets: tweetsList,
                             loading: false,
